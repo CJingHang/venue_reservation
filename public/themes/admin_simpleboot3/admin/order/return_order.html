@@ -1,0 +1,153 @@
+<include file="public@header" />
+</head>
+<body>
+	<div class="wrap js-check-wrap">
+		<ul class="nav nav-tabs">
+			<li class="active"><a href="">{:lang('ADMIN_ORDER_RETURN')}</a></li>
+		</ul>
+        <form class="well form-inline margin-top-20" method="post" action="{:url('order/index')}">
+            下单人ID
+            <input type="text" class="form-control" name="user_id" style="width: 150px;" value="{:input('request.user_id/s','')}" placeholder="请输入下单人ID">
+
+            订单编号
+            <input type="text" class="form-control" name="order_sn" style="width: 200px;" value="{:input('request.order_sn/s','')}" placeholder="请输入订单编号">
+
+            审核状态
+            <select class="form-control" name="status" style="width: 120px;">
+            	<option value="" selected="selected">请选择</option>
+            	<option value="1" <if condition="input('request.status/s') eq '1'">selected</if>>待审核</option>
+            	<option value="2" <if condition="input('request.status/s') eq '2'">selected</if>>审核通过</option>
+            	<option value="3" <if condition="input('request.status/s') eq '3'">selected</if>>审核失败</option>
+            	<option value="4" <if condition="input('request.status/s') eq '4'">selected</if>>无效作废</option>
+            </select>
+            <input type="submit" class="btn btn-primary" value="搜索" />
+            <a class="btn btn-danger" href="{:url('order/index')}">清空</a>
+        </form>
+
+        <button class="btn btn-success glyphicon glyphicon-ok-circle" onclick="examine(1);">审核通过</button>
+        <button class="btn btn-warning glyphicon glyphicon-ban-circle" onclick="examine(2);">审核失败</button>
+        <button class="btn btn-warning glyphicon glyphicon-remove-circle" onclick="examine(3);">无效作废</button>
+
+		<table class="table table-hover table-bordered margin-top-10">
+			<thead>
+				<tr>
+					<th>
+						<input type="checkbox" name="all">
+					</th>
+					<th width="50">ID</th>
+					<th>订单编号</th>
+					<th>下单人</th>
+					<th>总金额</th>
+					<th>预约时间</th>
+					<th>下单时间</th>
+					<th>支付状态</th>
+					<th>订单状态</th>
+					<th>审核状态</th>
+				</tr>
+			</thead>
+			<tbody>
+				<noempty name="list">
+					<php>
+						$pay_status = array('0'=>'未支付','1'=>'已支付');
+						$order_status = array('0'=>'未完成','1'=>'已完成','2'=>'已取消');
+						$status = array('0'=>'待审核','1'=>'审核通过','2'=>'审核失败', '3'=>'无效作废');
+					</php>
+					<foreach name="list" item="vo">
+						<tr>
+							<td>
+								<if condition="$vo.status eq 0">
+									<input type="checkbox" name="option" value="{$vo.id}">
+								</if>
+							</td>
+							<td>{$vo.id}</td>
+							<td>{$vo.order_sn}</td>
+							<td>{$vo.user_login}</td>
+							<td>{$vo.order_money}</td>
+							<td>{$vo.order_time}</td>
+							<td>{$vo.add_time|date="Y-m-d", ###}</td>
+							<td>{$pay_status[$vo.pay_status]}</div></td>
+							<td>{$order_status[$vo.order_status]}</td>
+							<td>{$status[$vo.status]}</td>
+						</tr>
+					</foreach>
+				</noempty>
+			</tbody>
+		</table>
+		<empty name="list">
+			<div class="no_data">暂时没有订单信息</div>
+		</empty>
+		<div class="pagination">{$page}</div>
+	</div>
+	<script src="__STATIC__/js/admin.js"></script>
+	<script type="text/javascript">
+		//全选/全不选
+		$("input[name='all']").click(function(){
+			if($(this).prop("checked")){
+				$("input[name='option']").prop("checked", true);
+			}else{
+				$("input[name='option'").prop("checked", false);
+			}
+		});
+
+		//单选
+		$("input[name='option'").click(function(){
+			var checked_total = $("input[name='option']").length;
+			var checked_num = $("input[name='option']:checked").length;
+
+			if(checked_total == checked_num){
+				$("input[name='all']").prop("checked", true);
+			}else{
+				$("input[name='all']").prop("checked", false);
+			}
+		});
+
+		//审核
+		function examine(status)
+		{
+			var checks = [];
+			$("input[name='option']:checked").each(function(i, o){
+				checks.push($(o).val());
+			});
+
+			if(checks.length == 0){
+				layer.alert('亲，请至少选择一项！', {icon:2});
+				return false;
+			}
+
+			var remark = '审核通过';
+			if(status != 1){
+				layer.prompt({title: '请填写备注（必填）', formType: 2}, function(text, index){
+					remark = text;
+					submit_examine(status, checks, remark);
+					layer.close(index);
+				});
+			}else{
+				submit_examine(status, checks, remark);
+			}
+		}
+
+		//提交审核
+		function submit_examine(status, checks, remark)
+		{
+			$.ajax({
+				type: 'POST',
+				url: '{:url("order/return_examine")}',
+				data: {'status':status, 'checks':checks, 'remark':remark},
+				dataType: 'json',
+				success: function(data){
+					if(data.status == 1){
+						layer.msg(data.msg, {time:3000, icon:1}, function(){
+							window.location.reload();
+						});
+					}else{
+						layer.msg(data.msg, {time:3000, icon:2});
+					}
+				},
+				error: function(e){
+					layer.msg('服务器繁忙，请联系客服！', {time:3000, icon:2});
+				}
+			});
+		}
+	</script>
+</body>
+</html>

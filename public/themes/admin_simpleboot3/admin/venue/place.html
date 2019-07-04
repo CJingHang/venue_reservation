@@ -1,0 +1,83 @@
+<include file="public@header" />
+</head>
+<body>
+	<div class="wrap js-check-wrap">
+		<ul class="nav nav-tabs">
+			<li><a href="{:url('venue/index')}">{:lang('ADMIN_VENUE')}</a></li>
+			<li class="active"><a href="">{:lang('ADMIN_PLACE')}</a></li>
+		</ul>
+        <form class="well form-inline margin-top-20" method="post" action="{:url('venue/place')}">
+        	<input type="hidden" name="venue_id" value="{$venue_id}">
+            场地名称:
+            <input type="text" class="form-control" name="place_name" style="width: 150px;" value="{:input('request.place_name/s','')}" placeholder="请输入{:lang('PLACE_NAME')}">
+            是否开启
+            <select class="form-control" name="status" style="width: 120px;">
+            	<option value="" selected="selected">请选择</option>
+            	<option value="1" <if condition="input('request.status/s') eq '1'">selected</if>>{:lang('OPEN')}</option>
+            	<option value="0" <if condition="input('request.status/s') eq '0'">selected</if>>{:lang('CLOSE')}</option>
+            </select>
+            是否预约
+            <select class="form-control" name="is_book" style="width: 120px;">
+            	<option value="" selected="selected">请选择</option>
+            	<option value="1" <if condition="input('request.is_book/s') eq '1'">selected</if>>{:lang('BOOK')}</option>
+            	<option value="0" <if condition="input('request.is_book/s') eq '0'">selected</if>>{:lang('UNBOOK')}</option>
+            </select>
+            <input type="submit" class="btn btn-primary" value="搜索" />
+            <a class="btn btn-danger" href="{:url('venue/place')}">清空</a>
+        </form>
+
+        <a class="btn btn-info" href="{:url('venue/add_place', array('venue_id'=>$venue_id))}">添加场地</a>
+
+		<table class="table table-hover table-bordered margin-top-10">
+			<thead>
+				<tr>
+					<th width="50">ID</th>
+					<th>{:lang('PLACE_NAME')}</th>
+					<th>{:lang('PLACE_PRICE')}</th>
+					<th>{:lang('OPEN_TIME')}</th>
+					<th>{:lang('SUB_PROJECT')}</th>
+					<th>{:lang('IS_BOOK')}</th>
+					<th>{:lang('CREATE_TIME')}</th>
+					<th>{:lang('UPDATE_TIME')}</th>
+					<th>{:lang('STATUS')}</th>
+					<th width="130">{:lang('ACTIONS')}</th>
+				</tr>
+			</thead>
+			<tbody>
+				<noempty name="list">
+					<php>
+						$order = array('0'=>lang('UNBOOK'), '1'=>lang('BOOK'));
+						$statuses = array('0'=>lang('CLOSE'), '1'=>lang('OPEN'));
+					</php>
+					<foreach name="list" item="vo">
+						<tr>
+							<td>{$vo.id}</td>
+							<td>{$vo.place_name}</td>
+							<td>￥{$vo.place_price}</td>
+							<td>{$vo.start_time}:00 -- {$vo.end_time}:00</td>
+							<td>{$vo.project_name}</td>
+							<td>{$order[$vo.is_book]}</td>
+							<td>{$vo.create_time|date="Y-m-d", ###}</td>
+							<td>{$vo.update_time|date="Y-m-d", ###}</td>
+							<td>{$statuses[$vo.status]}</td>
+							<td>
+								<a href="{:url('venue/edit_place', array('id'=>$vo.id, 'venue_id'=>$venue_id))}">{:lang('EDIT')}</a>
+								<if condition="$vo.status eq 1">
+									<a class="js-ajax-delete" data-msg="确定关闭它吗？" href="{:url('venue/change_status',array('id'=>$vo['id'],'status'=>0,'table'=>'place'))}">{:lang('CLOSE')}</a>
+								<else/>
+									<a class="js-ajax-delete" data-msg="确定开放它吗？" href="{:url('venue/change_status',array('id'=>$vo['id'],'status'=>1,'table'=>'place'))}">{:lang('OPEN')}</a>
+								</if>
+							</td>
+						</tr>
+					</foreach>
+				</noempty>
+			</tbody>
+		</table>
+		<empty name="list">
+			<div class="no_data">目前还没有场地</div>
+		</empty>
+		<div class="pagination"></div>
+	</div>
+	<script src="__STATIC__/js/admin.js"></script>
+</body>
+</html>

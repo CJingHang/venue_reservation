@@ -1,0 +1,91 @@
+<include file="public@header" />
+</head>
+<body>
+	<div class="wrap">
+		<ul class="nav nav-tabs">
+			<li><a href="{:url('venue/index')}">{:lang('ADMIN_VENUE')}</a></li>
+			<li><a href="{:url('venue/place')}">{:lang('ADMIN_PLACE')}</a></li>
+			<li class="active"><a href="">{:lang('ADMIN_EDIT_PLACE')}</a></li>
+		</ul>
+		<form method="post" class="form-horizontal js-ajax-form margin-top-20" action="{:url('venue/handle_place')}">
+			<div class="form-group">
+				<label for="input-user_login" class="col-sm-2 control-label"><span class="form-required">*</span>{:lang('CHOOSE_PROJECT')}</label>
+				<div class="col-md-6 col-sm-10">
+					<select class="form-control" name="project_id">
+						<foreach name="project" item="vo">
+							<option value="{$vo.id}" <if condition="$vo.id eq $place.project_id">selected</if>>
+								{$vo.project_name}
+							</option>
+						</foreach>
+					</select>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label for="place_name" class="col-sm-2 control-label">
+					<span class="form-required">*</span>编号或名称
+				</label>		
+				<div class="col-md-6 col-sm-10">
+					<input type="text" class="form-control" id="place_name" name="place_name" value="{$place.place_name}">
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label for="place_price" class="col-sm-2 control-label">
+					<span class="form-required">*</span>预定价格
+				</label>		
+				<div class="col-md-6 col-sm-10">
+					<input type="text" class="form-control" id="place_price" name="place_price" value="{$place.place_price}" oninput="value=value.replace(/[^\d.]/g, '')">
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label for="place_time" class="col-sm-2 control-label">
+					<span class="form-required">*</span>开放时间
+				</label>		
+				<div class="col-md-6 col-sm-10 form-inline" id="place_time">
+					<select class="form-control" id="start_time" name="start_time">
+						<for start="0" end="24">
+							<option value="{$i}" <if condition="$i eq $place.start_time">selected</if>>
+								{$i}:00
+							</option>
+						</for>
+					</select>
+					 --
+					<select class="form-control" id="end_time" name="end_time">
+						<for start="0" end="24">
+							<option value="{$i}" <if condition="$i eq $place.end_time">selected</if>>
+								{$i}:00
+							</option>
+						</for>
+					</select>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label for="status" class="col-sm-2 control-label">
+					<span class="form-required">*</span>是否开放
+				</label>
+				<div id="status" class="col-md-6 col-sm-10">
+					<label for="status_1" class="radio-inline">
+						<input type="radio" name="status" id="status_1" value="1" <if condition="$place.status eq '1'">checked</if>>开启
+					</label>
+					<label for="status_0" class="radio-inline">
+						<input type="radio" name="status" id="status_0" value="0" <if condition="$place.status eq '0'">checked</if>>关闭
+					</label>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<div class="col-sm-offset-2 col-sm-10">
+					<input type="hidden" name="place_id" value="{$place.id}">
+					<input type="hidden" name="venue_id" value="{$venue_id}">
+					<input type="hidden" name="action" value="edit">
+					<button type="submit" class="btn btn-primary js-ajax-submit">{:lang('ADMIN_EDIT')}</button>
+				</div>
+			</div>
+		</form>
+	</div>
+	<script src="__STATIC__/js/admin.js"></script>
+</body>
+</html>
