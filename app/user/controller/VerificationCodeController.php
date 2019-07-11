@@ -1,6 +1,6 @@
 <?php
 // +----------------------------------------------------------------------
-// | ThinkCMF [ WE CAN DO IT MORE SIMPLE ]
+// | 馆约 [ WE CAN DO IT MORE SIMPLE ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2013-2018 http://www.thinkcmf.com All rights reserved.
 // +----------------------------------------------------------------------
@@ -84,7 +84,7 @@ class VerificationCodeController extends HomeBaseController
 
             $message = htmlspecialchars_decode($emailTemplate['template']);
             $message = $this->view->display($message, ['code' => $code, 'username' => $username]);
-            $subject = empty($emailTemplate['subject']) ? 'ThinkCMF验证码' : $emailTemplate['subject'];
+            $subject = empty($emailTemplate['subject']) ? '馆约验证码' : $emailTemplate['subject'];
             $result  = cmf_send_email($data['username'], $subject, $message);
 
             if (empty($result['error'])) {

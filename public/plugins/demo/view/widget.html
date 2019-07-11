@@ -1,5 +1,5 @@
 <div class="well well-warning" style="display: inline-block;">
-	<h2>ThinkCMF插件演示</h2>
+	<h2>馆约插件演示</h2>
 	<p>
 		<b>主页:</b><a href ="{:cmf_plugin_url('Demo://Index/index')}" target="_blank" >访问</a>
 	</p>
@@ -21,7 +21,7 @@
 		<b>密码:</b>{$password}
 	</p>
 
-	<php> $select_options=array( '1'=>'ThinkCMFX', '2'=>'ThinkCMF',
+	<php> $select_options=array( '1'=>'馆约X', '2'=>'馆约',
 		'3'=>'跟猫玩糗事', '4'=>'门户应用' ); </php>
 
 	<p>
@@ -36,7 +36,7 @@
 		<foreach name='checkbox' item="vo">{$checkbox_options[$vo]}</foreach>
 	</p>
 
-	<php> $radio_options=array( '1'=>'ThinkCMFX', '2'=>'ThinkCMF' );
+	<php> $radio_options=array( '1'=>'馆约X', '2'=>'馆约' );
 	</php>
 	<p>
 		<b>单选框:</b>{$radio_options[$radio]}

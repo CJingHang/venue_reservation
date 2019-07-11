@@ -1,6 +1,6 @@
 <?php
 // +----------------------------------------------------------------------
-// | ThinkCMF [ WE CAN DO IT MORE SIMPLE ]
+// | 馆约 [ WE CAN DO IT MORE SIMPLE ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2013-2018 http://www.thinkcmf.com All rights reserved.
 // +----------------------------------------------------------------------
@@ -19,7 +19,7 @@ class CustomAdminLoginPlugin extends Plugin
         'title'       => '自定义后台登录页',
         'description' => '自定义后台登录页',
         'status'      => 1,
-        'author'      => 'ThinkCMF',
+        'author'      => '馆约',
         'version'     => '1.0'
     ];
 

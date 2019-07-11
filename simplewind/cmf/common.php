@@ -1,6 +1,6 @@
 <?php
 // +----------------------------------------------------------------------
-// | ThinkCMF [ WE CAN DO IT MORE SIMPLE ]
+// | 馆约 [ WE CAN DO IT MORE SIMPLE ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2013-2018 http://www.thinkcmf.com All rights reserved.
 // +----------------------------------------------------------------------
@@ -16,6 +16,7 @@ use think\Route;
 use think\Loader;
 use think\Request;
 use cmf\lib\Storage;
+use app\user\model\OrderIntervalModel;
 
 // 应用公共文件
 
@@ -1975,5 +1976,75 @@ function cmf_check_mobile($mobile)
         }
 
         return false;
+    }
+}
+
+/**
+ * 获取场馆的所有项目
+ * @param $venue_id
+ * @return string
+ */
+function cmf_get_venue_project($venueId)
+{
+    if($venueId != ''){
+        $where = array();
+        $where['pr.status'] = 1;
+        $where['pl.status'] = 1;
+        $where['pl.delete_time'] = 0;
+        $where['pl.venue_id'] = $venueId;
+
+        $project = Db::name('place pl')
+                ->join('project pr', 'pl.project_id = pr.id', 'LEFT')
+                ->where($where)
+                ->group('pr.id')
+                ->column('pr.project_name');
+
+        if($project){
+            foreach ($project as $key => $value) {
+                if($key == 0){
+                    $data = $value;
+                }else{
+                    $data = $data . "," . $value;
+                }
+            }
+            $data = mb_substr($data, 0, 10, 'utf8') . '...';
+            return $data;
+        }
+    }
+}
+
+/**
+ * 获取去除HTML标签，长度为100的字符串
+ * @param $string
+ * @return string
+ */
+function cmf_get_string($str)
+{
+    $str = strip_tags(htmlspecialchars_decode($str));
+    $str = mb_substr($str, 0, 100, 'utf8') . '...';
+    return $str;
+}
+
+/**
+ * 检测修改已到期的时段订单
+ */
+function cmf_check_order()
+{
+    $interval = array();
+    $where = array();
+    $where['status'] = 0;
+    $where['delete_time'] = 0;
+
+    $order = new OrderIntervalModel();
+    $allInterval = $order->where($where)->select();
+    foreach ($allInterval as $key => $value) {
+        if($value['interval'] >= time()){
+            $interval[$key]['status'] = 1;
+            $interval[$key]['id'] = $value['id'];
+        }
+    }
+
+    if(!empty($interval)){
+        $order->saveAll($interval);
     }
 }

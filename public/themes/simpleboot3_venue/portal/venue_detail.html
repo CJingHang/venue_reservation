@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{$venue.venue_name}</title>
+    <meta name="keywords" content="{$site_info.site_seo_keywords|default=''}"/>
+    <meta name="description" content="{$site_info.site_seo_description|default=''}">
+    <include file="public@head"/>
+    <style>
+        #venue_content img {
+            height: auto !important;
+            max-width: 100%;
+        }
+
+        #venue_content {
+            word-wrap: break-word;
+        }
+    </style>
+    <hook name="before_head_end"/>
+</head>
+<body class="body-white">
+<include file="public@nav"/>
+<div class="container tc-main">
+    <div class="row">
+        <div class="col-md-9">
+            <div class="tc-box article-box">
+                <h2>{$venue.venue_name}</h2>
+                <div>
+                    <php>
+                        $open_day = json_decode($venue["open_day"]);
+                        $open_time = json_decode($venue["open_time"]);
+                    </php>
+                    <span>周{$open_day.0}至周{$open_day.1} {$open_time.0}:00-{$open_time.1}:00</span>
+                    <span>&nbsp;&nbsp;&nbsp;{$venue.name}</span>
+                    <span>
+		    			<a href="javascript:;">
+                            &nbsp;&nbsp;&nbsp;
+                            <i class="fa fa-eye"></i>
+                            <span>{$venue.click_num}</span>
+                        </a>
+						<a href="{:url('portal/Venue/do_like',array('id'=>$venue['id']))}" class="js-count-btn">
+                            &nbsp;&nbsp;&nbsp;
+                            <i class="fa fa-thumbs-up"></i>
+                            <span class="count">{$venue.venue_like}</span>
+                        </a>
+					</span>
+                </div>
+                <hr>
+
+                <div id="venue_content">
+                    <img src="{$venue.venue_img|cmf_get_image_url}" class="img-thumbnail img-responsive">
+                    <h4>
+                        <b>简介</b>
+                    <h4>
+                    <p>{$venue.venue_desc|htmlspecialchars_decode}</p>
+                    <br><br>
+                    <p class="small">联系电话：</p>
+                    <p class="small">详细地址：{$venue.venue_address}</p>
+                    <div class="text-center">
+                        <a class="btn btn-primary" href="{:url('venue/venue_order', array('id'=>$venue.id))}">预约场地</a>
+                        <a class="btn btn-info text-center" href="javascript:history.back(-1);">返回上页</a>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+        <div class="col-md-3">
+            <div class="tc-box first-box">
+                <div class="headtitle">
+                    <h2>热门文章</h2>
+                </div>
+                <div class="ranking">
+                    <php>
+                        $hot_articles=[];
+                    </php>
+                    <ul class="list-unstyled">
+                        <portal:articles limit="5" order="post.post_hits DESC">
+                            <php>$top=$key<3?"top3":"";</php>
+                            <li class="{$top}">
+                                <i>{$key+1}</i>
+                                <a title="{$vo.post_title}"
+                                   href="{:url('portal/article/index',array('id'=>$vo['id']))}">
+                                    {$vo.post_title}
+                                </a>
+                            </li>
+                        </portal:articles>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <include file="public@footer"/>
+</div>
+
+<include file="public@scripts"/>
+<hook name="before_body_end"/>
+</body>
+</html>

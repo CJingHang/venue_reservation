@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{$user_login} - 我的订单</title>
+    <meta name="keywords" content=""/>
+    <meta name="description" content="">
+    <include file="public@head"/>
+</head>
+
+<body class="body-white" id="top">
+<include file="public@nav"/>
+
+<div class="container tc-main">
+    <div class="row">
+        <div class="col-md-3">
+            <include file="public@usernav"/>
+        </div>
+        <div class="col-md-9">
+            <div class="tabs">
+                <ul class="nav nav-tabs">
+                    <li class="active"><a href="#one"><i class="fa fa-list"></i> 我的订单</a></li>
+                    <li><a href="{:url('user/order/order_return')}"><i class="fa fa-list"></i> 退款申请</a></li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane active" id="one">
+                        <br>
+                        <table class="table table-bordered table-striped table-hover">
+                            <tr>
+                                <td>
+                                    <form action="{:url('user/order/index')}" method="post" id="search">
+                                    <span>订单状态</span>
+                                    <select name="status" style="width: 120px;" onchange="get_order();">
+                                        <option value="" selected="selected">全部</option>
+                                        <option value="0" <if condition="input('request.status/s') eq '0'">selected</if>>未到期</option>
+                                        <option value="1" <if condition="input('request.status/s') eq '1'">selected</if>>已到期</option>
+                                        <option value="2" <if condition="input('request.status/s') eq '2'">selected</if>>已取消</option>
+                                    </select>
+                                    </form>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <table class="table table-bordered table-hover tb">
+                                        <thead>
+                                            <tr>
+                                                <th>场馆</th>
+                                                <th>场地</th>
+                                                <th>金额</th>
+                                                <th>预约日期</th>
+                                                <th>预约时段</th>
+                                                <!-- <th>订单编号</th> -->
+                                                <th>支付状态</th>
+                                                <th>订单状态</th>
+                                                <th>操作</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <empty name="order">
+                                                <tr>
+                                                    <td colspan="9">
+                                                        <span class="gray">目前还没有订单哦</span>
+                                                    </td>
+                                                </tr>
+                                                <else/>
+                                                <php>
+                                                    $payStatus = array("0"=>"未支付", "1"=>"已支付");
+                                                    $status = array("0"=>"未到期", "1"=>"已到期", "2" => "已取消");
+                                                </php>
+                                                <foreach name="order" item="vo">
+                                                    <php>
+                                                        $interval = date("H", $vo["interval"]);
+                                                        $interval = $interval . ":00-" . ($interval+1) . ":00";
+                                                    </php>
+                                                    <tr>
+                                                        <td>{$vo.venue_name}</td>
+                                                        <td>{$vo.place_name}</td>
+                                                        <td>{$vo.price}</td>
+                                                        <td>{$vo.order_date|date="Y-m-d", ###}</td>
+                                                        <td>{$interval}</td>
+                                                        <!-- <td>{$vo.order_sn}</td> -->
+                                                        <td>{$payStatus[$vo.pay_status]}</td>
+                                                        <td>{$status[$vo.status]}</td>
+                                                        <td>
+                                                            <if condition="$vo.status eq 0">
+                                                                <notin name="vo.return_status" value="1">
+                                                                    <a class="btn btn-danger btn-sm js-ajax-delete" data-msg="确定取消订单吗？" href="{:url('user/order/order_cancel', array('id'=>$vo.id))}">取消</a>
+                                                                </notin>
+                                                            </if>
+                                                        </td>
+                                                    </tr>
+                                                </foreach>
+                                            </empty>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <ul class="pagination">{$page}</ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <include file="public@footer"/>
+    <script type="text/javascript">
+        function get_order(obj)
+        {
+            $('#search').submit();
+        }
+    </script>
+</div>
+<!-- /container -->
+<include file="public@scripts"/>
+</body>
+</html>

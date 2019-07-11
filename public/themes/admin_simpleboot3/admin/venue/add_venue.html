@@ -1,0 +1,132 @@
+<include file="public@header"/>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+		<li><a href="{:url('venue/index')}">{:lang('ADMIN_VENUE')}</a></li>
+		<li class="active"><a href="javascript:;">{:lang('ADMIN_ADD_VENUE')}</a></li>
+	</ul>
+    <form action="{:url('venue/handle_venue')}" method="post" class="form-horizontal js-ajax-form margin-top-20">
+    	<input type="hidden" name="action" value="add">
+		<div class="form-group">
+			<label for="venue_name" class="col-md-2 control-label"><span class="form-required">*</span>场馆名称</label>
+			<div class="col-md-8">
+				<input type="text" name="venue_name" id="venue_name" class="form-control">
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label for="venue_img" class="col-md-2 control-label">场馆图片</label>
+			<div class="col-md-8">
+				<input type="hidden" name="photo_url" id="venue-img">
+				<input type="text" name="photo_name" id="venue-img-name" placeholder="请上传图片" class="form-control">
+				<a href="javascript:uploadOneImage('图片上传', '#venue-img');">上传</a>
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label for="venue_area" class="col-md-2 control-label"><span class="form-required">*</span>选择地区</label>
+			<div id="venue_area" class="col-md-8 form-inline">
+				<select id="area" name="area" class="form-control">
+					<foreach name="region" item="vo">
+						<option value="{$vo.id}">{$vo.name}</option>
+					</foreach>
+				</select>
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label for="venue_mobile" class="col-md-2 control-label">联系电话</label>
+			<div class="col-md-8">
+				<input name="venue_mobile" id="venue_mobile" class="form-control" onkeyup="this.value=/^\d+$/.test(this.value)?this.value : ''">
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label for="venue_address" class="col-md-2 control-label"><span class="form-required">*</span>详细地址</label>
+			<div class="col-md-8">
+				<textarea name="venue_address" id="venue_address" class="form-control" rows="2"></textarea>
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label for="status" class="col-md-2 control-label"><span class="form-required">*</span>是否开放</label>
+			<div id="status" class="col-md-8">
+				<label class="radio-inline">
+					<input type="radio" name="status" id="status_1" value="1" checked="checked">开放
+				</label>
+				<label class="radio-inline">
+					<input type="radio" name="status" id="status_0" value="0">关闭
+				</label>
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label for="open_time" class="col-md-2 control-label"><span class="form-required">*</span>开放时间</label>
+			<div class="col-md-8 form-inline">
+				<select id="open_day_start" name="open_day_start" class="form-control">
+					<option value="一">周一</option>
+					<option value="二">周二</option>
+					<option value="三">周三</option>
+					<option value="四">周四</option>
+					<option value="五">周五</option>
+					<option value="六">周六</option>
+					<option value="日">周日</option>
+				</select>
+				<select id="open_day_end" name="open_day_end" class="form-control">
+					<option value="一">周一</option>
+					<option value="二">周二</option>
+					<option value="三">周三</option>
+					<option value="四">周四</option>
+					<option value="五">周五</option>
+					<option value="六">周六</option>
+					<option value="日">周日</option>
+				</select>
+				<select id="open_time_start" name="open_time_start" class="form-control" style="margin-left: 20px;">
+					<for start="6" end="24">
+						<option value="{$i}">{$i}:00</option>
+					</for>
+				</select>
+				<select id="open_time_end" name="open_time_end" class="form-control">
+					<for start="6" end="24">
+						<option value="{$i}">{$i}:00</option>
+					</for>
+				</select>
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label for="desc" class="col-md-2 control-label">场馆简介</label>
+			<div class="col-md-8">
+				<script type="text/plain" id="desc" name="desc"></script>
+			</div>
+		</div>
+
+		<div class="form-group">
+			<div class="col-md-offset-2 col-md-10">
+				<button type="submit" class="btn btn-primary js-ajax-submit">提交</button>
+				<a class="btn btn-default" href="javascript:history.back(-1);">{:lang('BACK')}</a>
+			</div>
+		</div>
+    </form>
+</div>
+<script type="text/javascript" src="__STATIC__/js/admin.js"></script>
+<script type="text/javascript">
+    //编辑器路径定义
+    var editorURL = GV.WEB_ROOT;
+</script>
+<script type="text/javascript" src="__STATIC__/js/ueditor/ueditor.config.js"></script>
+<script type="text/javascript" src="__STATIC__/js/ueditor/ueditor.all.min.js"></script>
+<script type="text/javascript">
+    $(function () {
+
+        editorcontent = new baidu.editor.ui.Editor();
+        editorcontent.render('desc');
+        try {
+            editorcontent.sync();
+        } catch (err) {
+        }
+    });
+</script>
+</body>
+</html>

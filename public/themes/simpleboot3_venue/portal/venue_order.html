@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>场地预约</title>
+    <meta name="keywords" content="{$site_info.site_seo_keywords|default=''}"/>
+    <meta name="description" content="{$site_info.site_seo_description|default=''}">
+    <include file="public@head"/>
+    <hook name="before_head_end"/>
+</head>
+<body class="body-white">
+<include file="public@nav"/>
+<div class="container tc-main">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="tc-box article-box">
+                <div style="color: #428bca;">
+                    <h4><b>场地选择 / {$venue.venue_name}</b></h4>
+                    <input type="hidden" name="venue_id" id="venue_id" value="{$venue.id}">
+                </div>
+                <hr>
+                <p style="color: #b8b4b4;">选择运动项目：</p>
+                <table class="table table-bordered">
+                    <tbody>
+                        <tr style="color: #428bca;">
+                            <td>
+                                <span>运动项目：</span>
+                                <select name="project_id" id="project_id" onchange="get_place();" style="width: 150px;">
+                                    <foreach name="project" item="vo">
+                                        <option value="{$vo.id}">{$vo.project_name}</option>
+                                    </foreach>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr id="place"></tr>
+                    </tbody>
+                </table>
+                <div class="text-center">
+                    <a class="btn btn-info text-center" href="javascript:history.back(-1);">返回上页</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <include file="public@footer"/>
+</div>
+
+<include file="public@scripts"/>
+<script type="text/javascript">
+    $(function(){
+        get_place();
+    });
+
+    function get_place()
+    {
+        var venue_id = $('#venue_id').val();
+        var project_id = $('#project_id').val();
+        $.ajax({
+            type: "post",
+            url: "{:url('portal/venue/get_place')}",
+            data: {"venue_id":venue_id, "project_id":project_id},
+            success: function(data){
+                if(data){
+                    $('#place>td').remove();
+                    $('#place').append(data);
+                }else{
+                    layer.msg('服务器繁忙，请联系客服！', {time:3000, icon:2});
+                }
+            },
+            error: function(e){
+                layer.msg('服务器繁忙，请联系客服！', {time:3000, icon:2});
+            }
+        });
+    }
+</script>
+<hook name="before_body_end"/>
+</body>
+</html>

@@ -1,0 +1,10 @@
+{
+  "name": "simpleboot3_venue",
+  "version": "1.0.0",
+  "demo_url": "http://demo.馆约.com",
+  "author": "馆约",
+  "lang": "zh-cn",
+  "author_url": "http://www.thinkcmf.com",
+  "keywords": "VenueReservation模板",
+  "description": "VenueReservation默认模板"
+}

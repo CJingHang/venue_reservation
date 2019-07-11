@@ -1,12 +1,12 @@
 <?php
 // +----------------------------------------------------------------------
-// | ThinkCMF [ WE CAN DO IT MORE SIMPLE ]
+// | 馆约 [ WE CAN DO IT MORE SIMPLE ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2013-2018 http://www.thinkcmf.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
 // +----------------------------------------------------------------------
-// | Author: 老猫 <thinkcmf@126.com>
+// | Author: 老猫 <馆约@126.com>
 // +----------------------------------------------------------------------
 return [
     //admin_menu
@@ -144,6 +144,8 @@ return [
 
     'ADMIN_PROJECT'                      => '所有项目',
     'ADMIN_VENUE'                        => '场馆',
+    'ADMIN_ADD_VENUE'                    => '添加场馆',
+    'ADMIN_EDIT_VENUE'                   => '编辑场馆',
     'ADMIN_VENUE_PROJECT'                => '场馆项目',
     'ADMIN_ADD_PROJECT'                  => '添加场馆项目',
     'ADMIN_PLACE'                        => '场地', 
@@ -153,5 +155,10 @@ return [
 
     'ADMIN_ORDER_LIST'                   => '订单列表', 
     'ADMIN_ORDER_RETURN'                 => '退款列表', 
+
+    'ADMIN_NOTICE_LIST'                  => '公告列表',
+    'ADMIN_ADD_NOTICE'                   => '添加公告',
+    'ADMIN_EDIT_NOTICE'                  => '编辑公告',
+
 ];
 

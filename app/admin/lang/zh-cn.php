@@ -1,12 +1,12 @@
 <?php
 // +----------------------------------------------------------------------
-// | ThinkCMF [ WE CAN DO IT MORE SIMPLE ]
+// | 馆约 [ WE CAN DO IT MORE SIMPLE ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2013-2018 http://www.thinkcmf.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
 // +----------------------------------------------------------------------
-// | Author: 老猫 <thinkcmf@126.com>
+// | Author: 老猫 <馆约@126.com>
 // +----------------------------------------------------------------------
 return [
     'ADMIN_CENTER'                       => '后台管理中心',
@@ -186,9 +186,10 @@ return [
     "CREATE_TIME"                        => '创建时间',
     'UPDATE_TIME'                        => '修改时间',
     'VENUE_IMG'                          => '场馆图片',
-    'INTRODUCTION'                       => '简介查看',
+    'INTRODUCTION'                       => '简介',
     'IS_BOOK'                            => '是否预约',
     'BOOK'                               => '已预约',
     'UNBOOK'                             => '未预约',
+    'VENUE_ADDRESS'                      => '详细地址',
 ];
 

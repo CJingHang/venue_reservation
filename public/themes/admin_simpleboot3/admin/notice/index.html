@@ -1,0 +1,55 @@
+<include file="public@header" />
+</head>
+<body>
+	<div class="wrap js-check-wrap">
+		<ul class="nav nav-tabs">
+			<li class="active"><a href="#">{:lang('ADMIN_NOTICE_LIST')}</a></li>
+		</ul>
+        <form class="well form-inline margin-top-20" method="post" action="{:url('notice/index')}">
+            标题:
+            <input type="text" class="form-control" name="title" style="width: 120px;" value="{:input('request.title/s','')}" placeholder="请输入标题">
+            <input type="submit" class="btn btn-primary" value="搜索" />
+            <a class="btn btn-danger" href="{:url('notice/index')}">清空</a>
+        </form>
+
+        <a class="btn btn-info" href="{:url('notice/add_notice')}">添加公告</a>
+
+		<table class="table table-hover table-bordered margin-top-20">
+			<thead>
+				<tr>
+					<th width="50">ID</th>
+					<th>发表人</th>
+					<th>标题</th>
+					<th width="300">内容</th>
+					<th>添加时间</th>
+					<th>修改时间</th>
+					<th width="130">{:lang('ACTIONS')}</th>
+				</tr>
+			</thead>
+			<tbody>
+				<noempty name="notice">	
+					<foreach name="notice" item="vo">
+						<tr>
+							<td>{$vo.id}</td>
+							<td>{$vo.user_login}</td>
+							<td>{$vo.title|mb_substr=0, 20, 'utf8'}...</td>
+							<td>{$vo.content|cmf_get_string}</td>
+							<td>{$vo.create_time|date="Y-m-d", ###}</td>
+							<td>{$vo.update_time|date="Y-m-d", ###}</td>
+							<td>
+								<a href="{:url('notice/edit_notice',array('id'=>$vo.id))}">{:lang('EDIT')}</a>
+								<a class="js-ajax-delete" href="{:url('notice/delete',array('id'=>$vo.id))}">{:lang('DELETE')}</a>
+							</td>
+						</tr>
+					</foreach>
+				</noempty>
+			</tbody>
+		</table>
+		<empty name="notice">
+			<div class="no_data">暂时没有公告信息</div>
+		</empty>
+		<div class="pagination">{$page}</div>
+	</div>
+	<script src="__STATIC__/js/admin.js"></script>
+</body>
+</html>

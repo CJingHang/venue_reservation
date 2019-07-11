@@ -1,0 +1,9 @@
+{
+  "name": "预定场馆",
+  "action": "portal/venue/venue",
+  "description": "预定场馆模板文件",
+  "order": 10.0,
+  "more": {
+    
+  }
+}

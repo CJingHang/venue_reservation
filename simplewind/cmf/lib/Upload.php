@@ -1,6 +1,6 @@
 <?php
 // +---------------------------------------------------------------------
-// | ThinkCMF [ WE CAN DO IT MORE SIMPLE ]
+// | 馆约 [ WE CAN DO IT MORE SIMPLE ]
 // +---------------------------------------------------------------------
 // | Copyright (c) 2013-2014 http://www.thinkcmf.com All rights reserved.
 // +---------------------------------------------------------------------
@@ -14,7 +14,7 @@ use think\File;
 use app\user\model\AssetModel;
 
 /**
- * ThinkCMF上传类,分块上传
+ * 馆约上传类,分块上传
  */
 class Upload
 {

@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>首页 {$site_info.site_name|default=''}</title>
+    <meta name="keywords" content="{$site_info.site_seo_keywords|default=''}"/>
+    <meta name="description" content="{$site_info.site_seo_description|default=''}">
+    <include file="public@head"/>
+    <link href="__TMPL__/public/assets/css/slippry/slippry.css" rel="stylesheet">
+    <style>
+        .caption-wraper {
+            position: absolute;
+            left: 50%;
+            bottom: 2em;
+        }
+
+        .caption-wraper .caption {
+            position: relative;
+            left: -50%;
+            background-color: rgba(0, 0, 0, 0.54);
+            padding: 0.4em 1em;
+            color: #fff;
+            -webkit-border-radius: 1.2em;
+            -moz-border-radius: 1.2em;
+            -ms-border-radius: 1.2em;
+            -o-border-radius: 1.2em;
+            border-radius: 1.2em;
+        }
+
+        .tc-gridbox {
+            margin: 0;
+        }
+
+        @media (max-width: 767px) {
+            .caption-wraper {
+                left: 0;
+                bottom: 0.4em;
+            }
+
+            .caption-wraper .caption {
+                left: 0;
+                padding: 0.2em 0.4em;
+                font-size: 0.92em;
+                -webkit-border-radius: 0;
+                -moz-border-radius: 0;
+                -ms-border-radius: 0;
+                -o-border-radius: 0;
+                border-radius: 0;
+            }
+        }
+
+    </style>
+    <hook name="before_head_end"/>
+</head>
+<body class="body-white">
+<include file="public@nav"/>
+
+<ul id="home-slider" class="list-unstyled">
+    <php>
+        $top_slide_id=empty($theme_vars['top_slide'])?1:$theme_vars['top_slide'];
+    </php>
+    <slides id="$top_slide_id">
+        <li>
+            <div class="caption-wraper">
+                <div class="caption">{$vo.title|default=''}</div>
+            </div>
+            <a href="{$vo.url|default=''}"><img src="{:cmf_get_image_url($vo.image)}" alt=""></a>
+        </li>
+    </slides>
+    <noslides id="$top_slide_id">
+        <li>
+            <div class="caption-wraper">
+                <div class="caption">此幻灯片只是演示,您没有设置任何幻灯片,请到后台模板设置！</div>
+            </div>
+            <a href=""><img src="__TMPL__/public/assets/images/demo/7.jpg" alt=""></a>
+        </li>
+        <li>
+            <div class="caption-wraper">
+                <div class="caption">此幻灯片只是演示,您没有设置任何幻灯片,请到后台模板设置！</div>
+            </div>
+            <a href=""><img src="__TMPL__/public/assets/images/demo/8.jpg" alt=""></a>
+        </li>
+        <li>
+            <div class="caption-wraper">
+                <div class="caption">此幻灯片只是演示,您没有设置任何幻灯片,请到后台模板设置！</div>
+            </div>
+            <a href=""><img src="__TMPL__/public/assets/images/demo/9.jpg" alt=""></a>
+        </li>
+    </noslides>
+</ul>
+
+<div class="container">
+    <widget name="features">
+        <div>
+            <h1 class="text-center">{$widget.title}</h1>
+            <h3 class="text-center">{$widget.vars.sub_title}</h3>
+        </div>
+        
+        <div class="row">
+            <foreach name="venue" item="vo">
+                <php>
+                    $open_day = json_decode($vo["open_day"]);
+                    $open_time = json_decode($vo["open_time"]);
+                </php>
+                <div class="col-md-3 margin-top-30">
+                    <div class="tc-gridbox">
+                        <div class="header">
+                            <div class="item-image">
+                                <a href="{:cmf_url('portal/Venue/venue_detail',array('id'=>$vo.id))}">
+                                    <img src="{$vo.venue_img|cmf_get_image_url}" class="img-responsive">
+                                </a>
+                            </div>
+                            <p>
+                                <a href="{:cmf_url('portal/Venue/venue_detail',array('id'=>$vo.id))}">{$vo.venue_name}</a>
+                            </p>
+                            <hr>
+                        </div>
+                        <div class="body small">
+                            <p>区域：{$vo.name}</p>
+                            <p>项目：{$vo.id|cmf_get_venue_project}</p>
+                            <p>开放时间：周{$open_day.0}至周{$open_day.1} {$open_time.0}:00-{$open_time.1}:00</p>
+                            <div class="text-center">
+                            <a class="btn-primary btn-sm" href="{:url('venue/venue_order', array('id'=>$vo.id))}">立即预定</a>
+                        </div>
+                        </div>
+                        <div>
+                            
+                        </div>
+                    </div>
+                </div>
+            </foreach>
+        </div>
+    </widget>
+    <br><br>
+
+    <widget name="platform_announcement">
+        <div>
+            <h1 class="text-center">{$widget.title}</h1><br>
+        </div>
+
+        <div class="row">
+            
+                <div class="col-md-12">
+                    <div class="col-md-4">
+                        <img src="{$widget['vars']['announcement_img']|cmf_get_image_url}" style="margin: auto 0; width: 99%;height: 100%">
+                    </div>
+                    <div class="panel panel-default col-md-8">
+                        <div class="panel-body">
+                            <ul class="list-unstyled">
+                                <foreach name="notice" item="vo">
+                                <li>
+                                    <p>
+                                        <a href="{:cmf_url('portal/notice/notice_detail',array('id'=>$vo.id))}">
+                                            <span>{$vo.title|mb_substr=0, 30, 'utf8'}...</span>
+                                        </a>
+                                        <span class="pull-right">[{$vo.create_time|date="Y-m-d H:i:s", ###}]</span>
+                                    </p>
+                                </li>
+                                </foreach>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+        </div>
+    </widget>
+    <br><br>
+
+    <widget name="last_news">
+        <div>
+            <h1 class="text-center">{$widget.title}</h1><br>
+        </div>
+
+        <div class="row">
+            <php>
+                $widget["vars"]["last_news_category_id"] = empty($widget["vars"]["last_news_category_id"])?1:$widget["vars"]["last_news_category_id"];
+                $last_news_limit=4;
+            </php>
+            <portal:articles limit="$last_news_limit" order="post.published_time DESC"
+                             categoryIds="$widget.vars.last_news_category_id">
+                <div class="col-md-3">
+                    <div class="tc-gridbox">
+                        <div class="header">
+                            <div class="item-image">
+                                <a href="{:cmf_url('portal/Article/index',array('id'=>$vo.id,'cid'=>$vo.category_id))}">
+                                    <present name="vo.more.thumbnail">
+                                        <empty name="vo.more.thumbnail">
+                                            <img src="__TMPL__/public/assets/images/default-thumbnail.png"
+                                                 class="img-responsive"
+                                                 alt="">
+                                            <else/>
+                                            <img src="{:cmf_get_image_url($vo.more.thumbnail)}"
+                                                 class="img-responsive"
+                                                 alt="">
+                                        </empty>
+                                        <else/>
+                                        <img src="__TMPL__/public/assets/images/default-thumbnail.png"
+                                             class="img-responsive"
+                                             alt="">
+                                    </present>
+                                </a>
+                            </div>
+                            <h3>
+                                <a href="{:cmf_url('portal/Article/index',array('id'=>$vo.id,'cid'=>$vo.category_id))}">{$vo.post_title}</a>
+                            </h3>
+                            <hr>
+                        </div>
+                        <div class="body">
+                            <p>
+                                <a href="{:cmf_url('portal/Article/index',array('id'=>$vo.id,'cid'=>$vo.category_id))}">{$vo.post_excerpt}</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </portal:articles>
+        </div>
+    </widget>
+    <include file="public@footer"/>
+</div>
+<!-- /container -->
+<include file="public@scripts"/>
+<script src="__TMPL__/public/assets/js/slippry.min.js"></script>
+<script>
+    $(function () {
+        $("#home-slider").slippry({
+            transition: 'fade',
+            useCSS: true,
+            captions: false,
+            speed: 1000,
+            pause: 3000,
+            auto: true,
+            preload: 'visible'
+        });
+        $("#home-slider").show();
+    });
+</script>
+<hook name="before_body_end"/>
+</body>
+</html>

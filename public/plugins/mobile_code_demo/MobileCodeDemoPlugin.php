@@ -1,6 +1,6 @@
 <?php
 // +----------------------------------------------------------------------
-// | ThinkCMF [ WE CAN DO IT MORE SIMPLE ]
+// | 馆约 [ WE CAN DO IT MORE SIMPLE ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2013-2018 http://www.thinkcmf.com All rights reserved.
 // +----------------------------------------------------------------------
@@ -20,7 +20,7 @@ class MobileCodeDemoPlugin extends Plugin
         'title'       => '手机验证码演示插件',
         'description' => '手机验证码演示插件',
         'status'      => 1,
-        'author'      => 'ThinkCMF',
+        'author'      => '馆约',
         'version'     => '1.0'
     ];
 

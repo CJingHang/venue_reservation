@@ -1,6 +1,6 @@
 <?php
 // +----------------------------------------------------------------------
-// | ThinkCMF [ WE CAN DO IT MORE SIMPLE ]
+// | 馆约 [ WE CAN DO IT MORE SIMPLE ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2013-2018 http://www.thinkcmf.com All rights reserved.
 // +----------------------------------------------------------------------
@@ -18,9 +18,9 @@ class ThemeDesignDemoPlugin extends Plugin
         'title'       => '模板设计插件演示',
         'description' => '模板设计插件演示',
         'status'      => 1,
-        'author'      => 'ThinkCMF',
+        'author'      => '馆约',
         'version'     => '1.0',
-        'demo_url'    => 'http://demo.thinkcmf.com',
+        'demo_url'    => 'http://demo.馆约.com',
         'author_url'  => 'http://www.thinkcmf.com'
     ];
 

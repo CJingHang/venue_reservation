@@ -1,6 +1,6 @@
 <?php
 // +----------------------------------------------------------------------
-// | ThinkCMF [ WE CAN DO IT MORE SIMPLE ]
+// | 馆约 [ WE CAN DO IT MORE SIMPLE ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2013-2018 http://www.thinkcmf.com All rights reserved.
 // +----------------------------------------------------------------------
@@ -35,37 +35,38 @@ class OrderController extends AdminBaseController
 	{
 		//搜索条件
 		$where = array();
-		$where['o.delete_time'] = 0;
+		$where['i.delete_time'] = 0;
 
 		$userId = $this->request->param('user_id');
 		$placeName = $this->request->param('place_name');
 		$orderSn = $this->request->param('order_sn');
 		$payStatus = $this->request->param('pay_status');
-		$orderStatus = $this->request->param('order_status');
+		$status = $this->request->param('status');
 		if($userId != ''){
-			$where['o.user_id'] = $userId;
+			$where['o.user_id'] = $userId; 
 		}
 		if($placeName != ''){
-			$where['p.place_name'] = "%$placeName%";
+			$where['p.place_name'] = ['like', "%$placeName%"];
 		}
 		if($orderSn != ''){
-			$where['o.order_sn'] = "%$orderSn%";
+			$where['o.order_sn'] = ['like', "%$orderSn%"];
 		}
 		if($payStatus != ''){
 			$where['o.pay_status'] = $payStatus;
 		}
-		if($orderStatus != ''){
-			$where['o.order_status'] = $orderStatus;
+		if($status != ''){
+			$where['i.status'] = $status;
 		}
 
-		$fir = "u.user_login, v.venue_name, p.place_name, o.*";
+		$fir = "u.user_login, v.venue_name, p.place_name, o.order_sn, o.order_date, o.pay_status, i.*";
 		$order = Db::name('order')->alias('o')
+				->join('order_interval i', 'i.order_id = o.id', 'LEFT')
 				->join('user u', 'o.user_id = u.id', 'LEFT')
-				->join('place p', 'o.place_id = p.id', 'LEFT')
+				->join('place p', 'i.place_id = p.id', 'LEFT')
 				->join('venue v', 'p.venue_id = v.id', 'LEFT')
 				->where($where)
 				->field($fir)
-				->order('o.id DESC')
+				->order('i.id DESC')
 				->paginate(15, false, ['query'=>request()->param()]);
 		$page = $order->render();
 
@@ -81,16 +82,16 @@ class OrderController extends AdminBaseController
 	{
 		$id = $this->request->param('id');
 
-		$isExist = Db::name('order')->where('id', $id)->find();
+		$isExist = Db::name('order_interval')->where('id', $id)->find();
 		if(!$isExist){
-			$this->error('订单不存在！');
+			$this->error('时段订单不存在！');
 			exit;
 		}
-		$result = Db::name('order')->where('id', $id)->update(['delete_time'=>time()]);
+		$result = Db::name('order_interval')->where('id', $id)->update(['delete_time'=>time()]);
 		if($result){
-			$this->success('订单删除成功！');
+			$this->success('时段订单删除成功！');
 		}else{
-			$this->error('订单删除失败！');
+			$this->error('时段订单删除失败！');
 		}
 	}
 
@@ -101,7 +102,7 @@ class OrderController extends AdminBaseController
 	{
 		//搜索条件
 		$where = array();
-		$where['o.delete_time'] = 0;
+		$where['i.delete_time'] = 0;
 
 		$userId = $this->request->param('user_id');
 		$orderSn = $this->request->param('order_sn');
@@ -110,16 +111,16 @@ class OrderController extends AdminBaseController
 			$where['o.user_id'] = $userId;
 		}
 		if($orderSn != ''){
-			$where['o.order_sn'] = "%$orderSn%";
+			$where['o.order_sn'] = ['like', "%$orderSn%"];
 		}
 		if($status != ''){
 			$where['r.status'] = $status;
 		}
 
-		$fir = "u.user_login, o.order_sn, o.order_money, o.order_time, 
-				o.pay_status, o.order_status, o.add_time, r.*";
+		$fir = "u.user_login, o.order_sn, o.order_date, o.add_time, o.pay_status, i.interval, i.price, i.status as order_status, r.*";
 		$order = Db::name('order_return')->alias('r')
-				->join('order o', 'r.order_id = o.id', 'LEFT')
+				->join('order_interval i', 'i.id = r.interval_id', 'LEFT')
+				->join('order o', 'i.order_id = o.id', 'LEFT')
 				->join('user u', 'o.user_id = u.id', 'LEFT')
 				->where($where)
 				->field($fir)
@@ -143,10 +144,13 @@ class OrderController extends AdminBaseController
 		
 		Db::startTrans();
 		try{
+			$intervalId = Db::name('order_return')->where(['id'=>['in', $checks]])->column('interval_id');
+
 			if($status == 1){
-				$orderId = Db::name('order_return')->where(['id'=>['in', $checks]])->column('order_id');
-				Db::name('order')->where(['id'=>['in', $orderId]])->update(['order_status'=>2]);
+				$update = ['status'=>2, 'return_time'=>time()];
+				Db::name('order_interval')->where(['id'=>['in', $intervalId]])->update($update);
 			}
+
 			$update = ['status'=>$status, 'remark'=>$remark, 'update_time'=>time()];
 			Db::name('order_return')->where(['id'=>['in', $checks]])->update($update);
 			Db::commit();

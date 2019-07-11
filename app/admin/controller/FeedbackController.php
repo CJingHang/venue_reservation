@@ -1,6 +1,6 @@
 <?php
 // +----------------------------------------------------------------------
-// | ThinkCMF [ WE CAN DO IT MORE SIMPLE ]
+// | 馆约 [ WE CAN DO IT MORE SIMPLE ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2013-2018 http://www.thinkcmf.com All rights reserved.
 // +----------------------------------------------------------------------
@@ -11,22 +11,8 @@
 namespace app\admin\controller;
 
 use cmf\controller\AdminBaseController;
-use app\admin\model\FeedbackModel;
 use think\Db;
 
-/**
- * Class FeedbackController
- * @package app\admin\controller
- * @adminMenuRoot(
- *     'name'   => '反馈管理',
- *     'action' => 'default',
- *     'parent' => 'user/AdminIndex/default',
- *     'display'=> true,
- *     'order'  => 50,
- *     'icon'   => '',
- *     'remark' => '反馈'
- * )
- */
 class FeedbackController extends AdminBaseController
 {
 	/*
@@ -35,6 +21,7 @@ class FeedbackController extends AdminBaseController
 	public function index()
 	{
 		$where = ["user_type" => 2];
+		$where['delete_time'] = 0;
         /**搜索条件**/
         $userLogin = $this->request->param('user_login');
         $userEmail = trim($this->request->param('user_email'));
@@ -45,13 +32,13 @@ class FeedbackController extends AdminBaseController
             $where['user_email'] = ['like', "%$userEmail%"];
         }
 		
-		$fir  = 'f.id, f.content, f.ctime, f.status, u.user_login, u.user_email'; 
+		$fir  = 'f.*, u.user_login, u.user_email'; 
 		$list = Db::name('feedback')->alias('f')
 				->join('user u', 'u.id = f.user_id')
 				->where($where)
 				->field($fir)
 				->order('id DESC')
-				->paginate(1);
+				->paginate(10, false, ['query'=>request()->param()]);
 		$page = $list->render();
 		$this->assign('page', $page);
 		$this->assign('list', $list); 
@@ -69,6 +56,7 @@ class FeedbackController extends AdminBaseController
 		$fir  = 'f.content, f.ctime, u.user_login, u.user_email';
 		$feedback = Db::name('feedback')->alias('f')
 				->join('user u', 'u.id = f.user_id')
+				->where('f.id', $id)
 				->field($fir)
 				->find();
 		$this->assign('feedback', $feedback);

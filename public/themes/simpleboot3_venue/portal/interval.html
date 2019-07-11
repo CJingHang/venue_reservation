@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>时段预约</title>
+    <meta name="keywords" content="{$site_info.site_seo_keywords|default=''}"/>
+    <meta name="description" content="{$site_info.site_seo_description|default=''}">
+    <include file="public@head"/>
+    <hook name="before_head_end"/>
+</head>
+<body class="body-white">
+<include file="public@nav"/>
+<div class="container tc-main">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="tc-box article-box">
+                <div style="color: #428bca;">
+                    <h4><b>{$place.place_name}</b></h4>
+                    <input type="hidden" name="place_id" id="place_id" value="{$place.id}">
+                </div>
+                <hr>
+                <p>
+                    <span style="color: #b8b4b4;">选择预约日期（只可提前预约1-7天）：</span>
+                    <span class="pull-right" style="color: #428bca;">注意：在页面下面进行结算</span>
+                </p>
+                <table class="table table-bordered">
+                    <tbody>
+                        <tr style="color: #428bca;">
+                            <td>
+                                <span>预约日期：</span>
+                                <select name="order_date" id="order_date" onchange="get_interval();" style="width: 150px;">
+                                    <foreach name="days" item="vo">
+                                        <option value="{$vo.time}" <if condition="$vo.flag eq 0">disabled="disabled"</if>>
+                                            {$vo.time|date="Y-m-d", ###}
+                                        </option>
+                                    </foreach>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr id="place"></tr>
+                        <tr>
+                            <td>
+                                <div>
+                                    <form id="interval_form">
+                                        <input type="hidden" name="id" id="id" value="{$place.id}">
+                                        <input type="hidden" name="price" id="price">
+                                        <input type="hidden" name="date" id="date">
+                                        <table class="table table-bordered tb-interval">
+                                            <caption><b>预约结算</b></caption>
+                                            <thead>
+                                                <th>预约日期</th>
+                                                <th>预约时段</th>
+                                                <th>金额</th>
+                                                <th>操作</th>
+                                            </thead>
+                                            <tbody id="interval"></tbody>
+                                            <tfoot>
+                                                <tr>
+                                                    <td colspan="4">
+                                                        <label for="total">总额</label>
+                                                        <input type="text" name="total" id="total" readonly value="0.00" style="width: 100px;">
+                                                        <a class="btn btn-primary btn-sm pull-right" style="width:80px;" id="submit">结算</a>
+                                                    </td>
+                                                </tr>
+                                            </tfoot>
+                                        </table>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="text-center">
+                    <a class="btn btn-info text-center" href="javascript:history.back(-1);">返回上页</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <include file="public@footer"/>
+</div>
+
+<include file="public@scripts"/>
+<script type="text/javascript">
+    $(function(){
+        get_interval();
+    });
+
+    $('#submit').click(function(){
+        $.ajax({
+            type: "post",
+            url: "{:url('portal/venue/do_order')}",
+            data: $('#interval_form').serialize(),
+            success: function(data){
+                if(data.status == 1){
+                    layer.msg(data.msg, {time:3000, icon:1}, function(){
+                        window.location.reload();
+                    });
+                }
+                if(data.status == 0){
+                    layer.msg(data.msg, {time:3000, icon:2});
+                }
+                if(data.status == 2){
+                    for (var i = 0; i < data.data.length; i++) {
+                        $('#' + data.data[i]).css("color","#F44336");
+                    }
+                    layer.msg(data.msg, {time:3000, icon:2});
+                }
+            },
+            error: function(e){
+                layer.msg('服务器繁忙，请联系客服！', {time:3000, icon:2});
+            }
+        });
+    });
+
+    function get_interval()
+    {
+        var place_id = $('#place_id').val();
+        var order_date = $('#order_date').val();
+        $.ajax({
+            type: "post",
+            url: "{:url('portal/venue/get_interval')}",
+            data: {"place_id":place_id, "order_date":order_date},
+            success: function(data){
+                if(data){
+                    $('#place>td').remove();
+                    $('#place').append(data);
+                    $('#date').val(order_date);
+                    $('#interval tr').remove();
+                }else{
+                    layer.msg('服务器繁忙，请联系客服！', {time:3000, icon:2});
+                }
+            },
+            error: function(e){
+                layer.msg('服务器繁忙，请联系客服！', {time:3000, icon:2});
+            }
+        });
+    }
+
+    function order(obj)
+    {
+        var interval = $(obj).attr('data-time');
+        var place_id = $('#place_id').val();
+        var order_date = $('#order_date').val();
+
+        $.ajax({
+            type: "post",
+            url: "{:url('portal/venue/order')}",
+            data: {"place_id":place_id, "order_date":order_date, "interval":interval},
+            success: function(data){
+                if(data.status == 1){
+                    $(obj).addClass("disabled");
+                    $(".price").html(data.data['price']);
+
+                    var total = $('#total').val();
+                    var tr = "<tr id='" + data.data["time"] +"'><td>" + data.data["order_date"] + "</td><td>" 
+                            + data.data['interval'] + "<input type='hidden' name='interval[]' value='" + 
+                            data.data["time"] + "'></td><td>" + data.data['price'] + 
+                            "</td><td><a href='javascript:;' onclick='cancel(this," + data.data["time"] + ");'>取消</a></td></tr>";
+
+                    $('#interval').append(tr);
+                    $(obj).parent("td").parent("tr").find('td:eq(2)').html('已选择');
+                    total = parseFloat(data.data.price) + parseFloat(total);
+                    $('#total').val(parseFloat(total).toFixed(2));
+                    $('#price').val(data.data.price);
+                }else{
+                    layer.msg('该时段已被选择！', {time:3000,icon:2});
+                    $(obj).parent("td").parent("tr").find('td:eq(1)').html(data.data['price']);
+                    $(obj).parent("td").parent("tr").find('td:eq(2)').html('已被预约');     
+                }
+            },
+            error: function(e){
+
+            }
+        });
+    }
+
+    function cancel(obj, time)
+    {
+        var total = parseFloat($('#total').val()).toFixed(2);
+        var price = $("a[data-time='" + time + "']").parent("td").parent("tr").find("td:eq(1)").html();
+        price = parseFloat(price).toFixed(2);
+        total = (total - price).toFixed(2);
+        $('#total').val(total);
+
+        time = time.toString();
+        if(time.length == 1){
+            time = "0" + time;
+        }
+        $("a[data-time='" + time + "']").removeClass("disabled");
+        $("a[data-time='" + time + "']").parent("td").parent("tr").find("td:eq(2)").html("未被预约");
+        $(obj).parent("td").parent("tr").remove();
+    }
+</script>
+<hook name="before_body_end"/>
+</body>
+</html>

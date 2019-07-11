@@ -1,10 +1,10 @@
 {
   "name": "simpleboot3",
   "version": "1.0.2",
-  "demo_url": "http://demo.thinkcmf.com",
-  "author": "ThinkCMF",
+  "demo_url": "http://demo.馆约.com",
+  "author": "馆约",
   "lang": "zh-cn",
   "author_url": "http://www.thinkcmf.com",
-  "keywords": "ThinkCMF模板",
-  "description": "ThinkCMF默认模板"
+  "keywords": "馆约模板",
+  "description": "馆约默认模板"
 }

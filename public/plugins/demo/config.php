@@ -1,6 +1,6 @@
 <?php
 // +----------------------------------------------------------------------
-// | ThinkCMF [ WE CAN DO IT MORE SIMPLE ]
+// | 馆约 [ WE CAN DO IT MORE SIMPLE ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2013-2018 http://www.thinkcmf.com All rights reserved.
 // +----------------------------------------------------------------------
@@ -16,7 +16,7 @@ return [
     'text'          => [// 在后台插件配置表单中的键名 ,会是config[text]
         'title' => '文本', // 表单的label标题
         'type'  => 'text',// 表单的类型：text,password,textarea,checkbox,radio,select等
-        'value' => 'hello,ThinkCMF!',// 表单的默认值
+        'value' => 'hello,馆约!',// 表单的默认值
         'tip'   => '这是文本组件的演示' //表单的帮助提示
     ],
     'password'      => [// 在后台插件配置表单中的键名 ,会是config[password]
@@ -35,8 +35,8 @@ return [
         'title'   => '下拉列表',
         'type'    => 'select',
         'options' => [//select 和radio,checkbox的子选项
-            '1' => 'ThinkCMFX',// 值=>显示
-            '2' => 'ThinkCMF',
+            '1' => '馆约X',// 值=>显示
+            '2' => '馆约',
             '3' => '跟猫玩糗事',
             '4' => '门户应用'
         ],
@@ -57,8 +57,8 @@ return [
         'title'   => '单选框',
         'type'    => 'radio',
         'options' => [
-            '1' => 'ThinkCMFX',
-            '2' => 'ThinkCMF'
+            '1' => '馆约X',
+            '2' => '馆约'
         ],
         'value'   => '1',
         'tip'     => '这是单选框组件'
@@ -67,8 +67,8 @@ return [
         'title'   => '单选框2',
         'type'    => 'radio',
         'options' => [
-            '1' => 'ThinkCMFX',
-            '2' => 'ThinkCMF'
+            '1' => '馆约X',
+            '2' => '馆约'
         ],
         'value'   => '1',
         'tip'     => '这是单选框组件2'

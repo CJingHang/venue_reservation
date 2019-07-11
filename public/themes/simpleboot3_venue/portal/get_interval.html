@@ -1,0 +1,40 @@
+<empty name="interval">
+	<td colspan="2" class="text-center gray">
+		没有可预约的时间段
+	</td>
+<else/>
+	<td>
+		<div>
+			<table class="table table-bordered tb-place">
+				<thead>
+					<th>预约时段</th>
+					<th>一小时价格</th>
+					<th>预约状态</th>
+					<th>预约</th>
+				</thead>
+				<tbody>
+					<foreach name="interval" item="vo">
+						<tr>
+							<td>{$vo.time_str}</td>
+							<td class="price">{$vo.price}</td>
+							<td>
+								<if condition="$vo.flag eq 1">
+									未被预约
+									<else/>
+									已被预约
+								</if>
+							</td>
+							<td>
+								<if condition="$vo.flag eq 1">
+									<a class="btn btn-primary btn-sm" style="width:80px;" href="javascript:;" data-time="{$vo.time}" onclick="order(this);">选择</a>
+									<else/>
+									<button class="btn btn-sm disabled" style="width:80px;">选择</button>
+								</if>
+							</td>
+						</tr>				
+					</foreach>
+				</tbody>
+			</table>
+		</div>	
+	</td>
+</empty>

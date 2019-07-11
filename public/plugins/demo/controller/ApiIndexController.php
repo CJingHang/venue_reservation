@@ -1,6 +1,6 @@
 <?php
 // +----------------------------------------------------------------------
-// | ThinkCMF [ WE CAN DO IT MORE SIMPLE ]
+// | 馆约 [ WE CAN DO IT MORE SIMPLE ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2013-2018 http://www.thinkcmf.com All rights reserved.
 // +----------------------------------------------------------------------
@@ -16,7 +16,7 @@ class ApiIndexController extends PluginRestBaseController
 
     public function index()
     {
-        $this->success('success', ['hello' => 'hello ThinkCMF!']);
+        $this->success('success', ['hello' => 'hello 馆约!']);
     }
 
 }

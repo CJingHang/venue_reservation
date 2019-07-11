@@ -1,10 +1,10 @@
-ThinkCMF 5.0.180901 正式版
+馆约 5.0.180901 正式版
 ===============
 
 ### 系列讲座
 https://www.thinkcmf.com/college.html
 
-### ThinkCMF5主要特性
+### 馆约5主要特性
 * 基于全新 ThinkPHP5.0开发
 * 更规范的代码,遵循PSR-2命名规范和PSR-4自动加载规范
 * 更规范的数据库设计
@@ -59,11 +59,11 @@ enjoy your cmf~!
 
 ### API开发 (支持app,小程序,web)
 如果你需要 `api` 开发请下载:  
-ThinkCMF5 API :https://github.com/thinkcmf/thinkcmfapi
+馆约5 API :https://github.com/馆约/馆约api
 
 ### 完整版目录结构
 ```
-thinkcmf  根目录
+馆约  根目录
 ├─api                   api目录(核心版不带)
 ├─app                   应用目录
 │  ├─portal             门户应用目录
@@ -107,24 +107,24 @@ thinkcmf  根目录
 ```
 
 ### 开发手册
-http://www.kancloud.cn/thinkcmf/doc
+http://www.kancloud.cn/馆约/doc
 
 ### QQ群:
-`ThinkCMF 官方交流群`:316669417  
+`馆约 官方交流群`:316669417  
    
-`ThinkCMF 高级交流群`:100828313 (付费)  
+`馆约 高级交流群`:100828313 (付费)  
 高级群专属权益:  
-第一波:两个后台风格(ThinkCMF官网风格后台主题,蓝色风格后台主题)  
-第二波:ThinkCMF5完全开发手册离线版(PDF,EPUB,MOBI格式)  
+第一波:两个后台风格(馆约官网风格后台主题,蓝色风格后台主题)  
+第二波:馆约5完全开发手册离线版(PDF,EPUB,MOBI格式)  
 更多专属权益正在路上...
 
-`ThinkCMF 铲屎官交流群`:415136742 (生活娱乐，为有喵的猿人准备)
+`馆约 铲屎官交流群`:415136742 (生活娱乐，为有喵的猿人准备)
 
 ### 话题专区
 http://www.thinkcmf.com/topic/index/index/cat/11.html
 
 ### 反馈问题
-https://github.com/thinkcmf/thinkcmf/issues
+https://github.com/馆约/馆约/issues
 
 ### 更新日志
 #### 5.0.180901
@@ -327,7 +327,7 @@ https://github.com/thinkcmf/thinkcmf/issues
 * 修复添加文章分类时 path 没数据问题
 
 [升级指导]
-https://www.kancloud.cn/thinkcmf/doc/327443
+https://www.kancloud.cn/馆约/doc/327443
 
 #### 5.0.170607
 [核心]

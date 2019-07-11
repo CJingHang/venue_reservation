@@ -1,6 +1,6 @@
 <?php
 // +----------------------------------------------------------------------
-// | ThinkCMF [ WE CAN DO IT MORE SIMPLE ]
+// | 馆约 [ WE CAN DO IT MORE SIMPLE ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2013-2018 http://www.thinkcmf.com All rights reserved.
 // +----------------------------------------------------------------------
@@ -41,6 +41,7 @@ class IndexController extends AdminBaseController
             return $content;
         }
 
+        cmf_check_order();
         $adminMenuModel = new AdminMenuModel();
         $menus          = cache('admin_menus_' . cmf_get_current_admin_id(), '', null, 'admin_menus');
 

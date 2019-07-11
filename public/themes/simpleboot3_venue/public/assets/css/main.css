@@ -1,0 +1,23 @@
+.left{
+	width: 300px;
+	float: left !important;
+}
+
+.right{
+	margin-left: 315px;
+}
+
+.left-first{
+	width: 300px;
+}
+
+.left-left-recommend{
+	text-align: left;
+	width: 280px;
+	height: 80px;
+}
+
+.left-img{
+	width: 80px;
+	height: 80px;
+}

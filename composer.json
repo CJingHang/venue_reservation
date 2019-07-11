@@ -1,10 +1,10 @@
 {
-    "name": "thinkcmf/thinkcmf",
-    "description": "ThinkCMF based on ThinkPHP 5.0 , it is a free and open source Content Management Framework(CMF)",
+    "name": "馆约/馆约",
+    "description": "馆约 based on ThinkPHP 5.0 , it is a free and open source Content Management Framework(CMF)",
     "type": "project",
     "keywords": [
     	"cmf",
-    	"thinkcmf",
+    	"馆约",
         "framework",
         "thinkphp",
         "ORM"
@@ -13,7 +13,7 @@
     "license": "Apache-2.0",
     "authors": [
         {
-            "name": "thinkcmf",
+            "name": "馆约",
             "email": "zxxjjforever@163.com"
         }
     ],

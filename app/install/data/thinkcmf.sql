@@ -585,7 +585,7 @@ CREATE TABLE IF NOT EXISTS `cmf_link` (
 --
 
 INSERT INTO `cmf_link` (`id`, `status`, `rating`, `list_order`, `description`, `url`, `name`, `image`, `target`, `rel`) VALUES
-(1, 1, 1, 8, 'thinkcmf官网', 'http://www.thinkcmf.com', 'ThinkCMF', '', '_blank', '');
+(1, 1, 1, 8, '馆约官网', 'http://www.thinkcmf.com', '馆约', '', '_blank', '');
 
 -- --------------------------------------------------------
 
@@ -1175,6 +1175,117 @@ CREATE TABLE `cmf_user_like` (
 
 ALTER TABLE `cmf_user` CHANGE `mobile` `mobile` VARCHAR(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '中国手机不带国家代码，国际手机号格式为：国家代码-手机号';
 
+
+--场馆表--
+CREATE TABLE `cmf_venue` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '表id',
+  `area_id` int(11) NOT NULL DEFAULT '0' COMMENT '区域id',
+  `venue_sn` varchar(255) NOT NULL DEFAULT '0' COMMENT '场馆编号',
+  `venue_name` varchar(255) NOT NULL DEFAULT '' COMMENT '场馆名称',
+  `venue_img` varchar(255) DEFAULT NULL COMMENT '场馆图片',
+  `venue_mobile` varchar(60) DEFAULT NULL COMMENT '场馆联系电话',
+  `venue_desc` text COMMENT '场馆描述',
+  `venue_address` text COMMENT '详细地址',
+  `open_day` varchar(255) NOT NULL DEFAULT '0' COMMENT '开放日',
+  `open_time` varchar(255) NOT NULL DEFAULT '0' COMMENT '开放时间',
+  `venue_like` int(11) DEFAULT '0' COMMENT '点赞量',
+  `click_num` int(11) DEFAULT '0' COMMENT '点击量',
+  `create_time` int(11) NOT NULL DEFAULT '0' COMMENT '创建时间',
+  `update_time` int(11) NOT NULL DEFAULT '0' COMMENT '修改时间',
+  `status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '是否开放：0不开放，1开放；',
+  `delete_time` int(11) NOT NULL DEFAULT '0' COMMENT '删除时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COMMENT='场馆表';
+
+--场地表--
+CREATE TABLE `cmf_place` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '表id',
+  `venue_id` bigint(20) NOT NULL DEFAULT '0' COMMENT '场馆id',
+  `project_id` bigint(20) NOT NULL DEFAULT '0' COMMENT '项目id',
+  `place_sn` varchar(255) NOT NULL DEFAULT '0' COMMENT '场地编号',
+  `place_name` varchar(255) NOT NULL COMMENT '场地名称或编号',
+  `place_price` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '场地预约每小时价格',
+  `create_time` int(11) NOT NULL DEFAULT '0' COMMENT '创建时间',
+  `update_time` int(11) NOT NULL DEFAULT '0' COMMENT '修改时间',
+  `status` tinyint(1) NOT NULL DEFAULT '0' COMMENT '状态：0关闭，1开放',
+  `delete_time` int(11) NOT NULL DEFAULT '0' COMMENT '删除时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
+
+--项目表--
+CREATE TABLE `cmf_project` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '表id',
+  `project_name` varchar(255) NOT NULL DEFAULT '' COMMENT '项目名称',
+  `status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '是否有效：0无效；1有效',
+  `ctime` int(11) NOT NULL DEFAULT '0' COMMENT '创建时间',
+  `desc` varchar(255) DEFAULT NULL COMMENT '描述',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='项目表';
+
+--订单表--
+CREATE TABLE `cmf_order` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '表id',
+  `user_id` bigint(20) NOT NULL DEFAULT '0' COMMENT '用户id',
+  `order_sn` varchar(255) NOT NULL DEFAULT '0' COMMENT '订单编号',
+  `order_money` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '订单总额',
+  `order_date` int(11) NOT NULL DEFAULT '0' COMMENT '预约日期',
+  `pay_status` tinyint(1) NOT NULL DEFAULT '0' COMMENT '支付状态：0未支付，1已支付',
+  `pay_time` int(11) NOT NULL DEFAULT '0' COMMENT '支付时间',
+  `user_mobile` varchar(50) NOT NULL DEFAULT '0' COMMENT '用户手机',
+  `user_email` varchar(255) NOT NULL DEFAULT '0' COMMENT '用户邮箱',
+  `add_time` int(11) NOT NULL DEFAULT '0' COMMENT '添加时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+
+--订单时段表--
+CREATE TABLE `cmf_order_interval` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '表id',
+  `order_id` bigint(20) NOT NULL DEFAULT '0' COMMENT '订单id',
+  `place_id` bigint(20) NOT NULL DEFAULT '0' COMMENT '场地id',
+  `price` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '订单总额',
+  `interval` int(11) NOT NULL DEFAULT '0' COMMENT '预定时间',
+  `add_time` int(11) NOT NULL DEFAULT '0' COMMENT '下单时间',
+  `delete_time` int(11) NOT NULL DEFAULT '0' COMMENT '删除时间',
+  `return_status` tinyint(1) NOT NULL DEFAULT '0' COMMENT '退单状态：0不退单，1退单',
+  `return_time` int(11) NOT NULL DEFAULT '0' COMMENT '支付时间',
+  `status` tinyint(1) NOT NULL DEFAULT '0' COMMENT '订单状态：0未到期，1已到期，2已取消',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
+
+--订单退款表--
+CREATE TABLE `cmf_order_return` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '表id',
+  `interval_id` bigint(20) NOT NULL DEFAULT '0' COMMENT '订单id',
+  `user_id` bigint(20) NOT NULL DEFAULT '0' COMMENT '用户id',
+  `create_time` int(11) NOT NULL DEFAULT '0' COMMENT '创建时间',
+  `update_time` int(11) NOT NULL DEFAULT '0' COMMENT '更新时间',
+  `remark` varchar(255) NOT NULL DEFAULT '' COMMENT '备注',
+  `status` tinyint(1) NOT NULL DEFAULT '0' COMMENT '退款申请状态：0待审核，1审核通过，2审核失败，3无效作废',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COMMENT='订单退款表';
+
+--公告表--
+CREATE TABLE `cmf_notice` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '表id',
+  `user_id` bigint(20) NOT NULL DEFAULT '0' COMMENT '发表人id',
+  `title` text NOT NULL COMMENT '公告标题',
+  `content` text NOT NULL COMMENT '公告内容',
+  `create_time` int(11) NOT NULL DEFAULT '0' COMMENT '添加时间',
+  `update_time` int(11) NOT NULL DEFAULT '0' COMMENT '修改时间',
+  `delete_time` int(11) NOT NULL DEFAULT '0' COMMENT '删除时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+
+--反馈表--
+CREATE TABLE `cmf_feedback` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '表id',
+  `user_id` bigint(20) NOT NULL DEFAULT '0' COMMENT '用户id',
+  `content` text NOT NULL COMMENT '反馈内容',
+  `ctime` int(11) NOT NULL DEFAULT '0' COMMENT '创建时间',
+  `delete_time` int(11) NOT NULL DEFAULT '0' COMMENT '删除时间',
+  `status` tinyint(2) NOT NULL DEFAULT '0' COMMENT '状态：0未查看；1已查看',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COMMENT='反馈表';
 
 --地区表--
 SET FOREIGN_KEY_CHECKS=0;

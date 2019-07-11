@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>场馆预定</title>
+    <meta name="keywords" content="{$site_info.site_seo_keywords|default=''}"/>
+    <meta name="description" content="{$site_info.site_seo_description|default=''}">
+    <include file="public@head"/>
+    <style>
+        #article_content img {
+            height: auto !important;
+            max-width: 100%;
+        }
+
+        #article_content {
+            word-wrap: break-word;
+        }
+    </style>
+    <hook name="before_head_end"/>
+</head>
+<body class="body-white">
+<include file="public@nav"/>
+<div class="container tc-main">
+    <div class="row">
+        <div class="col-md-9">
+            <div class="tc-box article-box">
+                <h3>场馆预定</h3>
+                <hr>
+                <table>
+                    <tr>
+                        <td style="width:10%;">
+                            <span class="gray">条件搜索：</span>
+                        </td>
+                        <td style="width:90%;">
+                            <form action="{:url('portal/venue/venue')}" method="post">
+                                <span class="gray">价格(￥):</span>
+                                <input type="text" name="lower_price" value="{:input('request.lower_price/s','')}" class="input-width"> - 
+                                <input type="text" name="upper_price" value="{:input('request.upper_price/s','')}" class="input-width">
+                                <input type="text" name="search" value="{:input('request.search/s','')}" class="margin-left-60" placeholder="请输入场馆名称">
+                                <!-- <input type="submit" value="搜索">  -->
+                            </form>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td style="width:10%;">
+                            <span class="gray">运动项目：</span>
+                        </td>
+                        <td style="width:90%;">
+                            <ul class="list-inline">
+                                <foreach name="projects" item="vo">
+                                    <li>
+                                        <a href="{:url('portal/venue/venue', array('project'=>$vo['id']))}">{$vo.project_name}</a>
+                                    </li>
+                                </foreach>
+                            </ul>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td style="width:10%;">
+                            <span class="gray">场馆区域：</span>
+                        </td>
+                        <td style="width:90%;">
+                            <ul class="list-inline">
+                              <foreach name="areas" item="vo">
+                                    <li>
+                                        <a href="{:url('portal/venue/venue', array('area'=>$vo['id']))}">{$vo.name}</a>
+                                    </li>
+                                </foreach>
+                            </ul>
+                        </td>
+                    </tr>
+                </table>
+                <hr>
+
+                <div>
+                    <foreach name="venue" item="vo">
+                        <php>
+                            $open_day = json_decode($vo["open_day"]);
+                            $open_time = json_decode($vo["open_time"]);
+                        </php>
+                        <table style="border: 1px dashed #ddd;min-height: 200px;padding-top: 50px;">
+                            <tr>
+                                <td>
+                                    <a href="{:url('portal/venue/venue_detail', array('id'=>$vo['id']))}">
+                                        <img src="{$vo.venue_img|cmf_get_image_url}" class="img-responsive tc-box" style="width: 300px;height: 200px;">
+                                    </a>
+                                </td>
+                                <td>
+                                    <!-- <table class="margin-left-20 small">
+                                        <tr>
+                                            <td colspan="2"><h4><strong>{$vo.venue_name}</strong></h4></td>
+                                        <tr>
+                                        <tr>
+                                            <td colspan="2"><p>简介：{$vo.venue_desc|cmf_get_string}<p></td>
+                                        <tr>
+                                        <tr>
+                                            <td><p><span>区域：{$vo.name}</span><p></td>
+                                            <td><p><span>项目：{$vo.id|cmf_get_venue_project}</span><p></td>
+                                        <tr>
+                                        <tr><td><p>简介：{$vo.venue_desc|cmf_get_string}<p></td><tr>
+                                        <tr><td><p>简介：{$vo.venue_desc|cmf_get_string}<p></td><tr>
+                                    </table> -->
+                                    <p class="margin-left-20"><strong>{$vo.venue_name}</strong></p>
+                                    <p class="margin-left-20 small">简介：{$vo.venue_desc|cmf_get_string}</p>
+                                    <p class="margin-left-20 small">
+                                        <span>区域：{$vo.name}</span>
+                                        <span class="pull-right">项目：{$vo.id|cmf_get_venue_project}</span>
+                                    </p>
+                                    <p class="margin-left-20 small">开放时间：周{$open_day.0}至周{$open_day.1} {$open_time.0}:00-{$open_time.1}:00</p>
+                                    <p class="margin-left-20 small">
+                                        <span>点击次数：{$vo.click_num}<span>
+                                        <span>点赞次数：{$vo.venue_like}<span>
+                                    </p>
+                                    <p class="margin-left-20 small"><a class="btn btn-primary btn-sm" href="{:url('portal/venue/venue_order', array('id'=>$vo.id))}">点击预定</a></p>
+                                </td>
+                            </tr>
+                        </table>
+                        <br>
+                    </foreach>
+                    
+                    <div class="pagination">{$page}</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="tc-box first-box">
+                <div class="headtitle">
+                    <h2>热门场馆</h2>
+                </div>
+                <div>
+                    <div>
+                        <a href="{:url('portal/venue/venue_detail', array('id'=>$hot_venue['id']))}" class="list-group-item">
+                            <img src="{$hot_venue.venue_img|cmf_get_image_url}" class="img-responsive">
+                        </a>
+                        <p>馆名：{$hot_venue.venue_name}</p>
+                        <p>地址：{$hot_venue.venue_address|mb_substr=0,10,'utf-8'}</p>
+                        <p>项目：{$hot_venue.id|cmf_get_venue_project}</p>
+                        <p class="text-center"><a href="{:url('portal/venue/venue_order', array('id'=>$hot_venue.id))}" class="btn btn-primary btn-sm">我要预定</a></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tc-box second-box">
+                <div class="headtitle">
+                    <h2>推荐场馆</h2>
+                </div>
+                <div>
+                    <foreach name="rec_venue" item="vo">
+                        <table class="margin-top-10">
+                            <tr>
+                                <td rowspan="2" class="box-percen">
+                                    <a href="{:url('portal/venue/venue_detail', array('id'=>$vo['id']))}">
+                                        <img src="{$vo.venue_img|cmf_get_image_url}" class="img-responsive">
+                                    </a>
+                                </td>
+                                <td style="width:50%; height:40%;">&nbsp;&nbsp;{$vo.venue_name}</td>
+                            </tr>
+                            <tr>
+                                <td style="width:50%; height:40%;">&nbsp;&nbsp;{$vo.id|cmf_get_venue_project}</td>
+                            </tr>
+                        </table>
+                        <br>
+                    </foreach>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <include file="public@footer"/>
+</div>
+
+<include file="public@scripts"/>
+<hook name="before_body_end"/>
+</body>
+</html>

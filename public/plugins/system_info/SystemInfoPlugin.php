@@ -1,6 +1,6 @@
 <?php
 // +----------------------------------------------------------------------
-// | ThinkCMF [ WE CAN DO IT MORE SIMPLE ]
+// | 馆约 [ WE CAN DO IT MORE SIMPLE ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2013-2018 http://www.thinkcmf.com All rights reserved.
 // +----------------------------------------------------------------------
@@ -19,7 +19,7 @@ class SystemInfoPlugin extends Plugin
         'title'       => '系统信息',
         'description' => '系统信息',
         'status'      => 1,
-        'author'      => 'ThinkCMF',
+        'author'      => '馆约',
         'version'     => '1.0'
     ];
 
@@ -44,7 +44,7 @@ class SystemInfoPlugin extends Plugin
         $mysql = $mysql[0]['version'];
         $mysql = empty($mysql) ? lang('UNKNOWN') : $mysql;
 
-        $version = THINKCMF_VERSION;
+        $version = 馆约_VERSION;
 
         //server infomation
         $info = [
@@ -55,7 +55,7 @@ class SystemInfoPlugin extends Plugin
             lang('PHP_VERSION')           => phpversion(),
             lang('MYSQL_VERSION')         => $mysql,
             'ThinkPHP'                    => THINK_VERSION,
-            'ThinkCMF'                    => "{$version} <a href=\"http://www.thinkcmf.com\" target=\"_blank\">访问官网</a>",
+            '馆约'                    => "{$version} <a href=\"http://www.thinkcmf.com\" target=\"_blank\">访问官网</a>",
             lang('UPLOAD_MAX_FILESIZE')   => ini_get('upload_max_filesize'),
             lang('MAX_EXECUTION_TIME')    => ini_get('max_execution_time') . "s",
             //TODO 增加更多信息
