@@ -8,7 +8,7 @@
         "vars": {
             "enable_mobile": {
                 "title": "手机注册",
-                "value": "馆约",
+                "value": "ThinkCMF",
                 "type": "select",
                 "value": 1,
                 "options": {

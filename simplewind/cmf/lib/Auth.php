@@ -1,6 +1,6 @@
 <?php
 // +---------------------------------------------------------------------
-// | 馆约 [ WE CAN DO IT MORE SIMPLE ]
+// | ThinkCMF [ WE CAN DO IT MORE SIMPLE ]
 // +---------------------------------------------------------------------
 // | Copyright (c) 2013-2014 http://www.thinkcmf.com All rights reserved.
 // +---------------------------------------------------------------------
@@ -13,7 +13,7 @@ namespace cmf\lib;
 use think\Db;
 
 /**
- * 馆约权限认证类
+ * ThinkCMF权限认证类
  */
 class Auth
 {

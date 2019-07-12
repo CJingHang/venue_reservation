@@ -1,6 +1,6 @@
 <?php
 // +----------------------------------------------------------------------
-// | 馆约 [ WE CAN DO IT MORE SIMPLE ]
+// | ThinkCMF [ WE CAN DO IT MORE SIMPLE ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2013-2018 http://www.thinkcmf.com All rights reserved.
 // +----------------------------------------------------------------------
@@ -231,41 +231,41 @@ class ProfileController extends UserBaseController
     /**
      * 绑定手机号
      */
-    // public function bindingMobile()
-    // {
-    //     if ($this->request->isPost()) {
-    //         $validate = new Validate([
-    //             'username'          => 'require|number|unique:user,mobile',
-    //             'verification_code' => 'require',
-    //         ]);
-    //         $validate->message([
-    //             'username.require'          => '手机号不能为空',
-    //             'username.number'           => '手机号只能为数字',
-    //             'username.unique'           => '手机号已存在',
-    //             'verification_code.require' => '验证码不能为空',
-    //         ]);
+    public function bindingMobile()
+    {
+        if ($this->request->isPost()) {
+            $validate = new Validate([
+                'username'          => 'require|number|unique:user,mobile',
+                'verification_code' => 'require',
+            ]);
+            $validate->message([
+                'username.require'          => '手机号不能为空',
+                'username.number'           => '手机号只能为数字',
+                'username.unique'           => '手机号已存在',
+                'verification_code.require' => '验证码不能为空',
+            ]);
 
-    //         $data = $this->request->post();
-    //         if (!$validate->check($data)) {
-    //             $this->error($validate->getError());
-    //         }
-    //         $errMsg = cmf_check_verification_code($data['username'], $data['verification_code']);
-    //         if (!empty($errMsg)) {
-    //             $this->error($errMsg);
-    //         }
-    //         $userModel = new UserModel();
-    //         $log       = $userModel->bindingMobile($data);
-    //         switch ($log) {
-    //             case 0:
-    //                 $this->success('手机号绑定成功');
-    //                 break;
-    //             default :
-    //                 $this->error('未受理的请求');
-    //         }
-    //     } else {
-    //         $this->error("请求错误");
-    //     }
-    // }
+            $data = $this->request->post();
+            if (!$validate->check($data)) {
+                $this->error($validate->getError());
+            }
+            $errMsg = cmf_check_verification_code($data['username'], $data['verification_code']);
+            if (!empty($errMsg)) {
+                $this->error($errMsg);
+            }
+            $userModel = new UserModel();
+            $log       = $userModel->bindingMobile($data);
+            switch ($log) {
+                case 0:
+                    $this->success('手机号绑定成功');
+                    break;
+                default :
+                    $this->error('未受理的请求');
+            }
+        } else {
+            $this->error("请求错误");
+        }
+    }
 
     /**
      * 绑定邮箱

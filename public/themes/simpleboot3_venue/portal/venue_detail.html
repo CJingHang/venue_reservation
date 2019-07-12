@@ -47,13 +47,13 @@
                 <hr>
 
                 <div id="venue_content">
-                    <img src="{$venue.venue_img|cmf_get_image_url}" class="img-thumbnail img-responsive">
+                    <img src="{$venue.venue_img|cmf_get_image_url}" class="img-thumbnail img-responsive" style="width: 100%;height: 100%;">
                     <h4>
                         <b>简介</b>
                     <h4>
                     <p>{$venue.venue_desc|htmlspecialchars_decode}</p>
                     <br><br>
-                    <p class="small">联系电话：</p>
+                    <p class="small">联系电话：{$venue.venue_mobile}</p>
                     <p class="small">详细地址：{$venue.venue_address}</p>
                     <div class="text-center">
                         <a class="btn btn-primary" href="{:url('venue/venue_order', array('id'=>$venue.id))}">预约场地</a>

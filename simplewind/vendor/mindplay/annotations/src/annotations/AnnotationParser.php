@@ -420,7 +420,7 @@ class AnnotationParser
             }
 
             if (!class_exists($type, $this->autoload)) {
-                continue; //馆约 note ,ignore not support annotation
+                continue; //ThinkCMF note ,ignore not support annotation
                 //throw new AnnotationException("Annotation type '{$type}' does not exist");
             }
 

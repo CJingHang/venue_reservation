@@ -1,6 +1,6 @@
 <?php
 // +----------------------------------------------------------------------
-// | 馆约 [ WE CAN DO IT MORE SIMPLE ]
+// | ThinkCMF [ WE CAN DO IT MORE SIMPLE ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2013-2018 http://www.thinkcmf.com All rights reserved.
 // +----------------------------------------------------------------------
@@ -18,9 +18,9 @@ class QiniuPlugin extends Plugin
     public $info = [
         'name'        => 'Qiniu',
         'title'       => '七牛云存储',
-        'description' => '馆约七牛专享优惠码:507670e8',
+        'description' => 'ThinkCMF七牛专享优惠码:507670e8',
         'status'      => 1,
-        'author'      => '馆约',
+        'author'      => 'ThinkCMF',
         'version'     => '1.0.1'
     ];
 

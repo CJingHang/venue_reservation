@@ -21,7 +21,7 @@
 <include file="public@nav"/>
 <div class="container tc-main">
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-4">
             <div class="tc-box">
                <div id="newsCarouse" class="carousel slide">
                     <!-- 轮播（Carousel）指标 -->
@@ -35,17 +35,17 @@
                         </volist>
                     </ol>   
                     <!-- 轮播（Carousel）项目 -->
-                    <div class="carousel-inner">
+                    <div class="carousel-inner" style="height: 243px;height: 243px;">
                         <volist name="focus" id="vo" offset="0" length="3">
                             <if condition="($i-1) eq 0">
-                                <div class="item active" style="height: 243px;">
+                                <div class="item active" style="height: 243px;height: 243px;">
                                     <a href="{:cmf_url('portal/Article/index',array('id'=>$vo.id,'cid'=>$vo.category_id))}">
                                         <img src="{$vo.thumbnail|cmf_get_image_url}" class="img-responsive">
                                     </a>
                                     <div class="carousel-caption">{$vo.post_title}</div>
                                 </div>
                                 <else/>
-                                <div class="item" style="height: 243px;">
+                                <div class="item" style="height: 243px;height: 243px;">
                                     <a href="{:cmf_url('portal/Article/index',array('id'=>$vo.id,'cid'=>$vo.category_id))}">
                                         <img src="{$vo.thumbnail|cmf_get_image_url}" class="img-responsive">
                                     </a>
@@ -67,7 +67,7 @@
             </div>
         </div>
 
-        <div class="col-md-6">
+        <div class="col-md-8">
             <div class="tc-box">
                 <div class="headtitle">
                     <h2>体育要闻</h2>
@@ -76,7 +76,7 @@
                     <ul class="list-unstyled">
                         <volist name="focus" id="vo">
                             <li>
-                                <a href="{:cmf_url('portal/Article/index',array('id'=>$vo.id,'cid'=>$vo.category_id))}">{$vo.post_title|mb_substr=0,22,'utf8'}...</a>
+                                <a href="{:cmf_url('portal/Article/index',array('id'=>$vo.id,'cid'=>$vo.category_id))}">{$vo.post_title|mb_substr=0,35,'utf8'}...</a>
                                 <span class="pull-right">[{$vo.published_time|date="Y-m-d", ###}]</span>
                             </li>
                         </volist>
@@ -99,13 +99,16 @@
                                     <img src="{$vo.thumbnail|cmf_get_image_url}" class="img-responsive" style="width: 400px; height: 200px;">
                                 </a>
                             </td>
-                            <td class="margin-left-20">
+                            <td>
+                                <div class="margin-left-20">
                                 <p>
-                                    <a href="{:cmf_url('portal/Article/index',array('id'=>$vo.id,'cid'=>$vo.category_id))}">{$vo.post_title}</a>
+                                    <a href="{:cmf_url('portal/Article/index',array('id'=>$vo.id,'cid'=>$vo.category_id))}" style="text-decoration: none;">{$vo.post_title}</a>
                                 </p>
+                                <br>
                                 <p>{$vo.post_content|cmf_get_string}</p>
+                                <br>
                                 <p>
-                                    <span class="margin-left-10">发表者：{$vo.user_login}</span>
+                                    <span>发表者：{$vo.user_login}</span>
                                     <span class="margin-left-10">发表时间：{$vo.published_time|date="Y-m-d",###}</span>
                                     <span class="margin-left-10">浏览次数：{$vo.post_hits}</span>
                                     <span class="margin-left-10">点赞次数：{$vo.post_like}</span>
@@ -113,6 +116,7 @@
                                 <p>
                                     <a href="{:cmf_url('portal/Article/index',array('id'=>$vo.id,'cid'=>$vo.category_id))}" class="pull-right">[全文]</a>
                                 </p>
+                                </div>
                             </td>
                         </tr>
                     </table>

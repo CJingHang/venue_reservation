@@ -1,6 +1,6 @@
 <?php
 // +---------------------------------------------------------------------
-// | 馆约 [ WE CAN DO IT MORE SIMPLE ]
+// | ThinkCMF [ WE CAN DO IT MORE SIMPLE ]
 // +---------------------------------------------------------------------
 // | Copyright (c) 2013-2014 http://www.thinkcmf.com All rights reserved.
 // +---------------------------------------------------------------------
@@ -36,7 +36,7 @@ abstract class Plugin
      *  'title'=>'Helloworld',
      *  'description'=>'Helloworld',
      *  'status'=>1,
-     *  'author'=>'馆约',
+     *  'author'=>'thinkcmf',
      *  'version'=>'1.0'
      *  )
      */

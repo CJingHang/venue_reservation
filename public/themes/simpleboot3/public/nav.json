@@ -9,7 +9,7 @@
             "company_name": {
                 "title": "公司名称",
                 "name": "company_name",
-                "value": "馆约",
+                "value": "ThinkCMF",
                 "type": "text",
                 "tip": "",
                 "rule": []

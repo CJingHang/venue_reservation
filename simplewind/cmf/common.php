@@ -1,6 +1,6 @@
 <?php
 // +----------------------------------------------------------------------
-// | 馆约 [ WE CAN DO IT MORE SIMPLE ]
+// | ThinkCMF [ WE CAN DO IT MORE SIMPLE ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2013-2018 http://www.thinkcmf.com All rights reserved.
 // +----------------------------------------------------------------------
@@ -2038,7 +2038,7 @@ function cmf_check_order()
     $order = new OrderIntervalModel();
     $allInterval = $order->where($where)->select();
     foreach ($allInterval as $key => $value) {
-        if($value['interval'] >= time()){
+        if($value['interval'] <= time()){
             $interval[$key]['status'] = 1;
             $interval[$key]['id'] = $value['id'];
         }

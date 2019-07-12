@@ -8,7 +8,7 @@
             "baidu_map_info_window_text": {
                 "title": "百度地图标注文字",
                 "name": "baidu_map_info_window_text",
-                "value": "馆约<br/><span class=''>地址：上海市徐汇区斜土路2601号</span>",
+                "value": "ThinkCMF<br/><span class=''>地址：上海市徐汇区斜土路2601号</span>",
                 "type": "text",
                 "tip": "百度地图标注文字,支持简单html代码",
                 "rule": []

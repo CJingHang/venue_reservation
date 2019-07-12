@@ -1,6 +1,6 @@
 <?php
 // +----------------------------------------------------------------------
-// | 馆约 [ WE CAN DO IT MORE SIMPLE ]
+// | ThinkCMF [ WE CAN DO IT MORE SIMPLE ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2013-2018 http://www.thinkcmf.com All rights reserved.
 // +----------------------------------------------------------------------
@@ -32,7 +32,7 @@ define('VENDOR_PATH', CMF_ROOT . 'simplewind/vendor/');
 define('RUNTIME_PATH', CMF_ROOT . 'data/runtime/');
 
 // 定义CMF 版本号
-define('馆约_VERSION', '5.0.180901');
+define('THINKCMF_VERSION', '5.0.180901');
 
 // 加载框架基础文件
 require CMF_ROOT . 'simplewind/thinkphp/base.php';

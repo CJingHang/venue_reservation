@@ -34,15 +34,6 @@
                         "rule": {
                             "require": true
                         }
-                    },
-                    "venue_list": {
-                        "title": "场馆",
-                        "value": "",
-                        "type": "text",
-                        "dataSource": {
-                            "api": "portal/Venue/index",
-                            "multi": false
-                        }
                     }
                 }
             },
@@ -52,7 +43,7 @@
                 "vars": {
                     "announcement_img": {
                         "title": "公告图片",
-                        "value": "",
+                        "value": "admin/20190712/99de2480b2dd99dfeb1b900c585e27b0.jpg",
                         "type": "image",
                         "tip": "输入公告图片",
                         "rule": { 
@@ -60,20 +51,6 @@
                         },
                         "message":{
                             "require":"不能为空"
-                        }
-                    },
-                    "platform_announcement_category_id": {
-                        "title": "文章分类ID",
-                        "value": "",
-                        "type": "text",
-                        "dataSource": {
-                            "api": "portal/Category/index",
-                            "multi": false
-                        },
-                        "placeholder": "请选择分类",
-                        "tip": "",
-                        "rule": {
-                            "require": true
                         }
                     }
                 }

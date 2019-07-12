@@ -1,6 +1,6 @@
 <?php
 // +----------------------------------------------------------------------
-// | 馆约 [ WE CAN DO IT MORE SIMPLE ]
+// | ThinkCMF [ WE CAN DO IT MORE SIMPLE ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2013-2018 http://www.thinkcmf.com All rights reserved.
 // +----------------------------------------------------------------------
@@ -64,10 +64,7 @@ class VenueController extends AdminBaseController
 	*/
 	public function add_venue()
 	{	
-		$region = Db::name('region')
-			->where(['level' => 3, 'parent_id' => 294])
-			->field('id, name')
-			->select();
+		$region = Db::name('region')->field('id, name')->select();
 		$this->assign('region', $region);
 		return $this->fetch();
 	}
@@ -82,10 +79,7 @@ class VenueController extends AdminBaseController
 		$venue['open_day'] = json_decode($venue['open_day']);
 		$venue['open_time'] = json_decode($venue['open_time']);
 
-		$region = Db::name('region')
-			->where(['level' => 3, 'parent_id' => 294])
-			->field('id, name')
-			->select();
+		$region = Db::name('region')->field('id, name')->select();
 		$this->assign('venue', $venue);
 		$this->assign('region', $region);
 		return $this->fetch();

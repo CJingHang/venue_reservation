@@ -27,29 +27,29 @@
                 <hr>
                 <table>
                     <tr>
-                        <td style="width:10%;">
+                        <td style="width:80px;">
                             <span class="gray">条件搜索：</span>
                         </td>
-                        <td style="width:90%;">
+                        <td>
                             <form action="{:url('portal/venue/venue')}" method="post">
                                 <span class="gray">价格(￥):</span>
                                 <input type="text" name="lower_price" value="{:input('request.lower_price/s','')}" class="input-width"> - 
                                 <input type="text" name="upper_price" value="{:input('request.upper_price/s','')}" class="input-width">
                                 <input type="text" name="search" value="{:input('request.search/s','')}" class="margin-left-60" placeholder="请输入场馆名称">
-                                <!-- <input type="submit" value="搜索">  -->
+                                <input type="submit" value="搜索" class="btn btn-primary btn-sm"> 
                             </form>
                         </td>
                     </tr>
 
                     <tr>
-                        <td style="width:10%;">
+                        <td style="width:80px;">
                             <span class="gray">运动项目：</span>
                         </td>
-                        <td style="width:90%;">
-                            <ul class="list-inline">
+                        <td>
+                            <ul class="list-inline list">
                                 <foreach name="projects" item="vo">
                                     <li>
-                                        <a href="{:url('portal/venue/venue', array('project'=>$vo['id']))}">{$vo.project_name}</a>
+                                        <a href="{:url('portal/venue/venue', array('project'=>$vo['id']))}" style="text-decoration: none;">{$vo.project_name}</a>
                                     </li>
                                 </foreach>
                             </ul>
@@ -57,14 +57,14 @@
                     </tr>
 
                     <tr>
-                        <td style="width:10%;">
+                        <td style="width:80px;">
                             <span class="gray">场馆区域：</span>
                         </td>
-                        <td style="width:90%;">
+                        <td>
                             <ul class="list-inline">
                               <foreach name="areas" item="vo">
                                     <li>
-                                        <a href="{:url('portal/venue/venue', array('area'=>$vo['id']))}">{$vo.name}</a>
+                                        <a href="{:url('portal/venue/venue', array('area'=>$vo['id']))}" style="text-decoration: none;">{$vo.name}</a>
                                     </li>
                                 </foreach>
                             </ul>
@@ -81,27 +81,39 @@
                         </php>
                         <table style="border: 1px dashed #ddd;min-height: 200px;padding-top: 50px;">
                             <tr>
-                                <td>
+                                <td width="30%">
                                     <a href="{:url('portal/venue/venue_detail', array('id'=>$vo['id']))}">
                                         <img src="{$vo.venue_img|cmf_get_image_url}" class="img-responsive tc-box" style="width: 300px;height: 200px;">
                                     </a>
                                 </td>
                                 <td>
-                                    <!-- <table class="margin-left-20 small">
+                                    <table class="margin-left-20 small">
                                         <tr>
-                                            <td colspan="2"><h4><strong>{$vo.venue_name}</strong></h4></td>
+                                            <td colspan="2">
+                                                <h4>
+                                                    <strong>
+                                                        <a href="{:url('portal/venue/venue_detail', array('id'=>$vo['id']))}" style="text-decoration: none;">{$vo.venue_name}</a>
+                                                    </strong>
+                                                </h4>
+                                            </td>
                                         <tr>
                                         <tr>
                                             <td colspan="2"><p>简介：{$vo.venue_desc|cmf_get_string}<p></td>
                                         <tr>
                                         <tr>
-                                            <td><p><span>区域：{$vo.name}</span><p></td>
-                                            <td><p><span>项目：{$vo.id|cmf_get_venue_project}</span><p></td>
+                                            <td width="50%"><p><span>区域：{$vo.name}</span><p></td>
+                                            <td width="50%"><p><span>项目：{$vo.id|cmf_get_venue_project}</span><p></td>
                                         <tr>
-                                        <tr><td><p>简介：{$vo.venue_desc|cmf_get_string}<p></td><tr>
-                                        <tr><td><p>简介：{$vo.venue_desc|cmf_get_string}<p></td><tr>
-                                    </table> -->
-                                    <p class="margin-left-20"><strong>{$vo.venue_name}</strong></p>
+                                        <tr>
+                                            <td pan="2"><p>开放时间：周{$open_day.0}至周{$open_day.1} {$open_time.0}:00-{$open_time.1}:00<p></td>
+                                        <tr>
+                                        <tr>
+                                            <td colspan="2"><p><span>点击次数：{$vo.click_num}<span>&nbsp;&nbsp;&nbsp;
+                                        <span>点赞次数：{$vo.venue_like}<span><p></td>
+                                        <tr>
+                                        <tr><td><p><a class="btn btn-primary btn-sm" href="{:url('portal/venue/venue_order', array('id'=>$vo.id))}">点击预定</a><p></td><tr>
+                                    </table>
+                                    <!-- <p class="margin-left-20"><strong>{$vo.venue_name}</strong></p>
                                     <p class="margin-left-20 small">简介：{$vo.venue_desc|cmf_get_string}</p>
                                     <p class="margin-left-20 small">
                                         <span>区域：{$vo.name}</span>
@@ -112,7 +124,7 @@
                                         <span>点击次数：{$vo.click_num}<span>
                                         <span>点赞次数：{$vo.venue_like}<span>
                                     </p>
-                                    <p class="margin-left-20 small"><a class="btn btn-primary btn-sm" href="{:url('portal/venue/venue_order', array('id'=>$vo.id))}">点击预定</a></p>
+                                    <p class="margin-left-20 small"><a class="btn btn-primary btn-sm" href="{:url('portal/venue/venue_order', array('id'=>$vo.id))}">点击预定</a></p> -->
                                 </td>
                             </tr>
                         </table>
@@ -155,10 +167,12 @@
                                         <img src="{$vo.venue_img|cmf_get_image_url}" class="img-responsive">
                                     </a>
                                 </td>
-                                <td style="width:50%; height:40%;">&nbsp;&nbsp;{$vo.venue_name}</td>
-                            </tr>
-                            <tr>
-                                <td style="width:50%; height:40%;">&nbsp;&nbsp;{$vo.id|cmf_get_venue_project}</td>
+                                <td style="width:50%; height:40%;">
+                                    <div class="margin-left-20 small">
+                                        <p>{$vo.venue_name}</p>
+                                        <p>{$vo.id|cmf_get_venue_project}</p>
+                                    </div>
+                                </td>
                             </tr>
                         </table>
                         <br>

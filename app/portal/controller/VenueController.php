@@ -1,12 +1,12 @@
 <?php
 // +----------------------------------------------------------------------
-// | 馆约 [ WE CAN DO IT MORE SIMPLE ]
+// | ThinkCMF [ WE CAN DO IT MORE SIMPLE ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2013-2018 http://www.thinkcmf.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
 // +----------------------------------------------------------------------
-// | Author: 老猫 <馆约@126.com>
+// | Author: 老猫 <ThinkCMF@126.com>
 // +----------------------------------------------------------------------
 namespace app\portal\controller;
 
@@ -46,7 +46,7 @@ class VenueController extends HomeBaseController
 
         //项目与区域类别
         $projects = Db::name('project')->where('status', 1)->select();
-        $areas = Db::name('region')->where(['level' => 3, 'parent_id' => 294])->select();
+        $areas = Db::name('region')->select();
 
         //热门场馆
         $hotVenue = Db::name('venue')->order('click_num DESC')->find();
@@ -282,7 +282,7 @@ class VenueController extends HomeBaseController
     public function do_order()
     {
         $this->checkUserLogin();
-        $data = $this->request->param();
+        $data = $this->request->param();  
         $data['interval'] = array_unique($data['interval']);
         $isOrder = $this->check_interval($data['id'], $data['date'], $data['interval']);
         if(count($isOrder) > 0){

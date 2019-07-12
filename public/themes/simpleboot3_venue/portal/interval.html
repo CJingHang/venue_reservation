@@ -121,10 +121,10 @@
             data: {"place_id":place_id, "order_date":order_date},
             success: function(data){
                 if(data){
-                    $('#place>td').remove();
-                    $('#place').append(data);
                     $('#date').val(order_date);
                     $('#interval tr').remove();
+                    $('#place>td').remove();
+                    $('#place').append(data);
                 }else{
                     layer.msg('服务器繁忙，请联系客服！', {time:3000, icon:2});
                 }

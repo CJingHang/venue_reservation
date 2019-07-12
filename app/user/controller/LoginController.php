@@ -1,6 +1,6 @@
 <?php
 // +----------------------------------------------------------------------
-// | 馆约 [ WE CAN DO IT MORE SIMPLE ]
+// | ThinkCMF [ WE CAN DO IT MORE SIMPLE ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2013-2018 http://www.thinkcmf.com All rights reserved.
 // +----------------------------------------------------------------------
@@ -156,7 +156,7 @@ class LoginController extends HomeBaseController
             }
             switch ($log) {
                 case 0:
-                    $this->success('密码重置成功', url('login/index'));
+                    $this->success('密码重置成功', $this->request->root());
                     break;
                 case 1:
                     $this->error("您的账户尚未注册");

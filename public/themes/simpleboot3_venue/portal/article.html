@@ -57,44 +57,12 @@
                 <div id="article_content">
                     {$article.post_content}
                 </div>
+                <br><br>
                 <if condition="!empty($article['post_source'])">
                     <div>
                         <b>注：本文转载自{$article.post_source}，转载目的在于传递更多信息，并不代表本网赞同其观点和对其真实性负责。如有侵权行为，请联系我们，我们会及时删除。</b>
                     </div>
-                </if>
-
-                <php>
-                    $after_content_hook_param=[
-                    'object_id'=>$article['id'],
-                    'table_name'=>'portal_post',
-                    'object_title'=>$article['post_title'],
-                    'user_id'=>$article['user_id'],
-                    'url'=>cmf_url_encode('portal/Article/index',array('id'=>$article['id'],'cid'=>$category['id'])),
-                    'object'=>$article
-                    ];
-                </php>
-                <hook name="after_content" param="after_content_hook_param"/>
-
-                <php>
-                    $comment_hook_param=[
-                    'object_id'=>$article['id'],
-                    'table_name'=>'portal_post',
-                    'object_title'=>$article['post_title'],
-                    'url'=>cmf_url_encode('portal/Article/index',array('id'=>$article['id'],'cid'=>$category['id'])),
-                    'user_id'=>$article['user_id'],
-                    ];
-                    $comment=hook_one('comment',$comment_hook_param);
-                </php>
-
-                <if condition="empty($comment) && cmf_get_current_admin_id()">
-                    <div style="border: 1px dashed #ddd;min-height: 200px;padding-top: 50px;">
-                        <div class="alert alert-warning" role="alert">
-                            此区域这为评论区，请安装评论插件！<br>
-                            <em>注：普通用户不会看到此提示！</em>
-                        </div>
-                    </div>
-                </if>
-                {$comment}
+                </if>   
             </div>
 
 

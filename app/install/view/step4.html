@@ -87,7 +87,7 @@
                             if (data.data.error) {
                                 noty({
                                     text: "安装过程,共" + data.data.error + "个SQL执行错误,可能您在此数据库下已经安装过 CMF,请查看问题后重新安装,或者<br>"
-                                    + '<a target="_blank" href="https://github.com/馆约/馆约/issues">反馈问题</a>',
+                                    + '<a target="_blank" href="https://github.com/thinkcmf/thinkcmf/issues">反馈问题</a>',
                                     type: 'confirm',
                                     layout: "center",
                                     timeout: false,
@@ -149,7 +149,7 @@
             $.ajax({
                 url: "{:url('install/index/setDbConfig')}",
                 dataType: 'json',
-                data:{_hi馆约:1},
+                data:{_hithinkcmf:1},
                 type: 'post',
                 success: function (data) {
                     if (data.code == 1) {
@@ -195,7 +195,7 @@
             $.ajax({
                 url: "{:url('install/index/setSite')}",
                 dataType: 'json',
-                data:{_hi馆约:1},
+                data:{_hithinkcmf:1},
                 type: 'post',
                 success: function (data) {
 
@@ -243,7 +243,7 @@
             $.ajax({
                 url: "{:url('install/index/installTheme')}",
                 dataType: 'json',
-                data:{_hi馆约:1},
+                data:{_hithinkcmf:1},
                 type: 'post',
                 success: function (data) {
 
