@@ -20,7 +20,7 @@ class PublicController extends AdminBaseController
     }
 
     /**
-     * 后台登陆界面
+     * 后台登陆界面 
      */
     public function login()
     {
